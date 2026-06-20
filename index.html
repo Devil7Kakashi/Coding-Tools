@@ -2,75 +2,340 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Unicode Converter</title>
+<title>Converter Tools</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    padding:20px;
+    font-family:Arial,sans-serif;
     background:#f5f5f5;
+    padding:20px;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.tab{
+    padding:10px 15px;
+    border:none;
+    cursor:pointer;
+    background:#ddd;
+    font-size:16px;
+}
+
+.tab.active{
+    background:#2196F3;
+    color:white;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
 }
 
 textarea{
     width:100%;
-    height:220px;
-    font-size:18px;
-    padding:10px;
+    height:180px;
     margin:10px 0;
+    padding:10px;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    font-size:18px;
+    margin-bottom:15px;
     box-sizing:border-box;
 }
 </style>
 </head>
 <body>
 
+<div class="tabs">
+    <button class="tab active"
+        onclick="showPage('unicodePage',this)">
+        Unicode Escape Converter
+    </button>
+
+    <button class="tab"
+        onclick="showPage('decimalPage',this)">
+        Decimal Converter
+    </button>
+</div>
+
+<!-- Unicode Page -->
+
+<div id="unicodePage" class="page active">
+
 <h2>Unicode Escape Sequence Converter</h2>
 
 <textarea id="unicodeBox"
-placeholder="Unicode Escape Sequence"></textarea>
+placeholder="Enter Unicode Escape Sequence"></textarea>
 
 <textarea id="textBox"
-placeholder="Normal Text"></textarea>
+placeholder="Enter Text"></textarea>
+
+</div>
+
+<!-- Decimal Page -->
+
+<div id="decimalPage" class="page">
+
+<h2>Decimal Converter</h2>
+
+<label>Decimal</label>
+<input type="text" id="decimal" value="0">
+
+<label>Binary</label>
+<input type="text" id="binary" value="0">
+
+<label>Octal</label>
+<input type="text" id="octal" value="0">
+
+<label>Hex</label>
+<input type="text" id="hex" value="0">
+
+</div>
 
 <script>
-const unicodeBox = document.getElementById("unicodeBox");
-const textBox = document.getElementById("textBox");
 
-let updating = false;
+/* ==========================
+   PAGE SYSTEM
+========================== */
+
+function showPage(id,btn){
+
+    document.querySelectorAll(".page")
+    .forEach(page=>{
+        page.classList.remove("active");
+    });
+
+    document.querySelectorAll(".tab")
+    .forEach(tab=>{
+        tab.classList.remove("active");
+    });
+
+    document
+    .getElementById(id)
+    .classList.add("active");
+
+    btn.classList.add("active");
+}
+
+/* ==========================
+   UNICODE CONVERTER
+========================== */
+
+const unicodeBox =
+document.getElementById("unicodeBox");
+
+const textBox =
+document.getElementById("textBox");
+
+let updatingUnicode = false;
 
 function encodeUnicode(str){
     return [...str]
-        .map(ch =>
-            "\\u" +
-            ch.charCodeAt(0)
-              .toString(16)
-              .padStart(4,"0"))
-        .join("");
+    .map(ch =>
+        "\\u" +
+        ch.charCodeAt(0)
+        .toString(16)
+        .padStart(4,"0")
+    )
+    .join("");
 }
 
 function decodeUnicode(str){
+
     try{
         return str.replace(
             /\\u([0-9a-fA-F]{4})/g,
-            (_,hex)=>String.fromCharCode(parseInt(hex,16))
+            (_,hex)=>
+            String.fromCharCode(
+                parseInt(hex,16)
+            )
         );
-    }catch{
+    }
+    catch{
         return "";
     }
 }
 
-unicodeBox.addEventListener("input", () => {
-    if(updating) return;
-    updating = true;
-    textBox.value = decodeUnicode(unicodeBox.value);
-    updating = false;
+unicodeBox.addEventListener(
+"input",()=>{
+
+    if(updatingUnicode) return;
+
+    updatingUnicode = true;
+
+    textBox.value =
+    decodeUnicode(
+        unicodeBox.value
+    );
+
+    updatingUnicode = false;
 });
 
-textBox.addEventListener("input", () => {
-    if(updating) return;
-    updating = true;
-    unicodeBox.value = encodeUnicode(textBox.value);
-    updating = false;
+textBox.addEventListener(
+"input",()=>{
+
+    if(updatingUnicode) return;
+
+    updatingUnicode = true;
+
+    unicodeBox.value =
+    encodeUnicode(
+        textBox.value
+    );
+
+    updatingUnicode = false;
 });
+
+/* ==========================
+   DECIMAL CONVERTER
+========================== */
+
+const decimalBox =
+document.getElementById("decimal");
+
+const binaryBox =
+document.getElementById("binary");
+
+const octalBox =
+document.getElementById("octal");
+
+const hexBox =
+document.getElementById("hex");
+
+let updatingNumber = false;
+
+function fromDecimal(){
+
+    let n =
+    parseInt(
+        decimalBox.value || 0,
+        10
+    );
+
+    binaryBox.value =
+    n.toString(2);
+
+    octalBox.value =
+    n.toString(8);
+
+    hexBox.value =
+    n.toString(16)
+    .toUpperCase();
+}
+
+function fromBinary(){
+
+    let n =
+    parseInt(
+        binaryBox.value || 0,
+        2
+    );
+
+    decimalBox.value = n;
+
+    octalBox.value =
+    n.toString(8);
+
+    hexBox.value =
+    n.toString(16)
+    .toUpperCase();
+}
+
+function fromOctal(){
+
+    let n =
+    parseInt(
+        octalBox.value || 0,
+        8
+    );
+
+    decimalBox.value = n;
+
+    binaryBox.value =
+    n.toString(2);
+
+    hexBox.value =
+    n.toString(16)
+    .toUpperCase();
+}
+
+function fromHex(){
+
+    let n =
+    parseInt(
+        hexBox.value || 0,
+        16
+    );
+
+    decimalBox.value = n;
+
+    binaryBox.value =
+    n.toString(2);
+
+    octalBox.value =
+    n.toString(8);
+}
+
+decimalBox.addEventListener(
+"input",()=>{
+
+    if(updatingNumber) return;
+
+    updatingNumber = true;
+
+    fromDecimal();
+
+    updatingNumber = false;
+});
+
+binaryBox.addEventListener(
+"input",()=>{
+
+    if(updatingNumber) return;
+
+    updatingNumber = true;
+
+    fromBinary();
+
+    updatingNumber = false;
+});
+
+octalBox.addEventListener(
+"input",()=>{
+
+    if(updatingNumber) return;
+
+    updatingNumber = true;
+
+    fromOctal();
+
+    updatingNumber = false;
+});
+
+hexBox.addEventListener(
+"input",()=>{
+
+    if(updatingNumber) return;
+
+    updatingNumber = true;
+
+    fromHex();
+
+    updatingNumber = false;
+});
+
 </script>
 
 </body>
