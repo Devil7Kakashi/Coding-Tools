@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Unicode Converter</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    padding:20px;
+    background:#f5f5f5;
+}
+
+textarea{
+    width:100%;
+    height:220px;
+    font-size:18px;
+    padding:10px;
+    margin:10px 0;
+    box-sizing:border-box;
+}
+</style>
+</head>
+<body>
+
+<h2>Unicode Escape Sequence Converter</h2>
+
+<textarea id="unicodeBox"
+placeholder="Unicode Escape Sequence"></textarea>
+
+<textarea id="textBox"
+placeholder="Normal Text"></textarea>
+
+<script>
+const unicodeBox = document.getElementById("unicodeBox");
+const textBox = document.getElementById("textBox");
+
+let updating = false;
+
+function encodeUnicode(str){
+    return [...str]
+        .map(ch =>
+            "\\u" +
+            ch.charCodeAt(0)
+              .toString(16)
+              .padStart(4,"0"))
+        .join("");
+}
+
+function decodeUnicode(str){
+    try{
+        return str.replace(
+            /\\u([0-9a-fA-F]{4})/g,
+            (_,hex)=>String.fromCharCode(parseInt(hex,16))
+        );
+    }catch{
+        return "";
+    }
+}
+
+unicodeBox.addEventListener("input", () => {
+    if(updating) return;
+    updating = true;
+    textBox.value = decodeUnicode(unicodeBox.value);
+    updating = false;
+});
+
+textBox.addEventListener("input", () => {
+    if(updating) return;
+    updating = true;
+    unicodeBox.value = encodeUnicode(textBox.value);
+    updating = false;
+});
+</script>
+
+</body>
+</html>
