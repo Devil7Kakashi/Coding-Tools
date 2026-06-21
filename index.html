@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Converter Tools</title>
+<title>Coding Tools</title>
 
 <style>
 body{
@@ -22,7 +22,7 @@ body{
     border:none;
     cursor:pointer;
     background:#ddd;
-    font-size:16px;
+    font-size:20px;
 }
 
 .tab.active{
@@ -40,17 +40,17 @@ body{
 
 textarea{
     width:100%;
-    height:180px;
+    height:200px;
     margin:10px 0;
     padding:10px;
-    font-size:18px;
+    font-size:20px;
     box-sizing:border-box;
 }
 
 input{
     width:100%;
     padding:10px;
-    font-size:18px;
+    font-size:20px;
     margin-bottom:15px;
     box-sizing:border-box;
 }
@@ -67,6 +67,11 @@ input{
     <button class="tab"
         onclick="showPage('decimalPage',this)">
         Decimal Converter
+    </button>
+
+    <button class="tab"
+       onclick="showPage('jsonPage',this)">
+       JSON Cleaner
     </button>
 </div>
 
@@ -101,6 +106,20 @@ placeholder="Enter Text"></textarea>
 
 <label>Hex</label>
 <input type="text" id="hex" value="0">
+
+</div>
+
+<!-- JSON Cleaner Page -->
+
+<div id="jsonPage" class="page">
+
+<h2>JSON Cleaner</h2>
+
+<textarea id="jsonDirty"
+placeholder="Paste Unclean JSON Here"></textarea>
+
+<textarea id="jsonClean"
+placeholder="Clean JSON Here"></textarea>
 
 </div>
 
@@ -334,6 +353,69 @@ hexBox.addEventListener(
     fromHex();
 
     updatingNumber = false;
+});
+
+/* ==========================
+   JSON CLEANER
+========================== */
+
+const jsonDirty =
+document.getElementById("jsonDirty");
+
+const jsonClean =
+document.getElementById("jsonClean");
+
+let updatingJson = false;
+
+jsonDirty.addEventListener(
+"input",()=>{
+
+    if(updatingJson) return;
+
+    updatingJson = true;
+
+    try{
+
+        const obj =
+        JSON.parse(
+            jsonDirty.value
+        );
+
+        jsonClean.value =
+        JSON.stringify(
+            obj,
+            null,
+            4
+        );
+
+    }catch{
+
+        jsonClean.value = "";
+    }
+
+    updatingJson = false;
+});
+
+jsonClean.addEventListener(
+"input",()=>{
+
+    if(updatingJson) return;
+
+    updatingJson = true;
+
+    try{
+
+        const obj =
+        JSON.parse(
+            jsonClean.value
+        );
+
+        jsonDirty.value =
+        JSON.stringify(obj);
+
+    }catch{}
+
+    updatingJson = false;
 });
 
 </script>
