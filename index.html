@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -535,6 +534,7 @@ function setStatus(id, message) {
 
 /* COPY HELPER WITH FALLBACK */
 
+
 async function copyValue(id) {
     const el = document.getElementById(id);
 
@@ -542,6 +542,16 @@ async function copyValue(id) {
         id === "jsonClean" ? "jsonStatus" :
         id.includes("Box") ? "unicodeStatus" :
         "numberStatus";
+
+    // Check empty boxes only for Unicode and readable text.
+    if (id === "unicodeBox" || id === "textBox") {
+        el.classList.remove("copy-invalid");
+
+        if (!el.value.trim()) {
+            el.classList.add("copy-invalid");
+            return;
+        }
+    }
 
     try {
         if (navigator.clipboard && window.isSecureContext) {
@@ -574,22 +584,19 @@ async function copyValue(id) {
         if (success) {
             setStatus(statusId, "Copied to clipboard!");
         } else {
-            setStatus(
-                statusId,
-                "Automatic copy failed. Select the output and copy it manually."
-            );
+            setStatus(statusId,
+                "Automatic copy failed. Select the output and copy it manually.");
         }
     } catch (error) {
-        setStatus(
-            statusId,
-            "Copy failed. Please select the text and copy it manually."
-        );
+        setStatus(statusId,
+            "Copy failed. Please select the text and copy it manually.");
     } finally {
         if (temp && temp.parentNode) {
             temp.parentNode.removeChild(temp);
         }
     }
 }
+
 
 /* UNICODE CONVERTER */
 
@@ -633,6 +640,7 @@ unicodeBox.addEventListener("input", () => {
 
     updatingUnicode = true;
     textBox.value = decodeUnicode(unicodeBox.value);
+    textBox.classList.remove("copy-invalid");
     updatingUnicode = false;
 
     setStatus("unicodeStatus", "Decoded Unicode sequence.");
@@ -643,9 +651,16 @@ textBox.addEventListener("input", () => {
 
     updatingUnicode = true;
     unicodeBox.value = encodeUnicode(textBox.value);
+    unicodeBox.classList.remove("copy-invalid");
     updatingUnicode = false;
 
     setStatus("unicodeStatus", "Encoded text into Unicode.");
+});
+
+  [unicodeBox, textBox].forEach(el => {
+    el.addEventListener("input", () => {
+        el.classList.remove("copy-invalid");
+    });
 });
 
 function clearUnicode() {
@@ -770,7 +785,16 @@ function resetNumbers() {
 const jsonDirty = document.getElementById("jsonDirty");
 const jsonClean = document.getElementById("jsonClean");
 
+
 function readJSON() {
+    jsonDirty.classList.remove("copy-invalid");
+
+    if (!jsonDirty.value.trim()) {
+        jsonDirty.classList.add("copy-invalid");
+        setStatus("jsonStatus", "Please enter JSON first.");
+        return undefined;
+    }
+
     try {
         const obj = JSON.parse(jsonDirty.value);
 
@@ -784,26 +808,35 @@ function readJSON() {
 }
 
 async function copyFormattedJSON() {
-    const obj = readJSON();
+    jsonClean.classList.remove("copy-invalid");
 
-    if (obj === undefined) return;
-
-    jsonClean.value = JSON.stringify(obj, null, 3);
-    jsonClean.classList.remove("invalid");
+    if (!jsonClean.value.trim()) {
+        jsonClean.classList.add("copy-invalid");
+        return;
+    }
 
     await copyValue("jsonClean");
 }
 
 async function copyCompactJSON() {
-    const obj = readJSON();
+    jsonDirty.classList.remove("copy-invalid");
 
-    if (obj === undefined) return;
+    if (!jsonDirty.value.trim()) {
+        jsonDirty.classList.add("copy-invalid");
+        return;
+    }
 
-    jsonClean.value = JSON.stringify(obj);
-    jsonClean.classList.remove("invalid");
-
-    await copyValue("jsonClean");
+    try {
+        const obj = JSON.parse(jsonDirty.value);
+        jsonClean.value = JSON.stringify(obj);
+        jsonClean.classList.remove("invalid", "copy-invalid");
+        await copyValue("jsonClean");
+    } catch (error) {
+        jsonDirty.classList.add("invalid");
+        setStatus("jsonStatus", "Invalid JSON: " + error.message);
+    }
 }
+
 
 function clearJSON() {
     jsonDirty.value = "";
@@ -818,6 +851,7 @@ function clearJSON() {
 /* LIVE JSON VALIDATION AND FORMATTED PREVIEW */
 
 jsonDirty.addEventListener("input", () => {
+    jsonDirty.classList.remove("copy-invalid");
     jsonDirty.classList.remove("invalid");
 
     if (!jsonDirty.value.trim()) {
@@ -830,6 +864,7 @@ jsonDirty.addEventListener("input", () => {
         const obj = JSON.parse(jsonDirty.value);
 
         jsonClean.value = JSON.stringify(obj, null, 3);
+        jsonClean.classList.remove("copy-invalid");
         jsonClean.classList.remove("invalid");
 
         setStatus("jsonStatus", "Valid JSON.");
@@ -839,10 +874,12 @@ jsonDirty.addEventListener("input", () => {
     }
 });
 
+
 /* SYNC EDITS FROM OUTPUT BACK TO INPUT */
 
 jsonClean.addEventListener("input", () => {
     jsonClean.classList.remove("invalid");
+    jsonClean.classList.remove("copy-invalid");
 
     if (!jsonClean.value.trim()) return;
 
@@ -850,6 +887,7 @@ jsonClean.addEventListener("input", () => {
         const obj = JSON.parse(jsonClean.value);
 
         jsonDirty.value = JSON.stringify(obj);
+        jsonDirty.classList.remove("copy-invalid");
         jsonDirty.classList.remove("invalid");
 
         setStatus("jsonStatus", "JSON synchronized.");
