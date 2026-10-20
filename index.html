@@ -639,29 +639,36 @@ const hexBox = document.getElementById("hex");
 
 let updatingNumber = false;
 
+
 function parseBase(value, base) {
     const input = value.trim();
 
     if (!input) return null;
 
     const patterns = {
-        2: /^[01]+$/,
-        8: /^[0-7]+$/,
+        2: /^-?[01]+$/,
+        8: /^-?[0-7]+$/,
         10: /^-?\d+$/,
-        16: /^[0-9a-fA-F]+$/
+        16: /^-?[0-9a-fA-F]+$/
     };
 
     if (!patterns[base].test(input)) return null;
 
     try {
-        const n = BigInt(input);
+        const negative = input.startsWith("-");
+        const digits = negative ? input.slice(1) : input;
 
-        if (n > BigInt(Number.MAX_SAFE_INTEGER) ||
-            n < BigInt(Number.MIN_SAFE_INTEGER)) {
-            return n;
+        let result = 0n;
+
+        for (const char of digits.toLowerCase()) {
+            const digit = parseInt(char, 16);
+
+            if (digit >= base) return null;
+
+            result = result * BigInt(base) + BigInt(digit);
         }
 
-        return n;
+        return negative ? -result : result;
     } catch {
         return null;
     }
@@ -681,7 +688,10 @@ function updateNumbers(source, base) {
 
     if (n === null) {
         input.classList.add("invalid");
-        setStatus("numberStatus", "Invalid value for base " + base + ".");
+        setStatus(
+            "numberStatus",
+            "Invalid value for base " + base + "."
+        );
         return;
     }
 
@@ -697,6 +707,7 @@ function updateNumbers(source, base) {
     });
 
     updatingNumber = false;
+
     setStatus("numberStatus", "Converted successfully.");
 }
 
