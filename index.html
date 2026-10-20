@@ -765,6 +765,26 @@ function readJSON() {
     }
 }
 
+async function copyFormattedJSON() {
+    const obj = readJSON();
+    if (obj === undefined) return;
+
+    jsonClean.value = JSON.stringify(obj, null, 3);
+    jsonClean.classList.remove("invalid");
+
+    await copyValue("jsonClean");
+}
+
+async function copyCompactJSON() {
+    const obj = readJSON();
+    if (obj === undefined) return;
+
+    jsonClean.value = JSON.stringify(obj);
+    jsonClean.classList.remove("invalid");
+
+    await copyValue("jsonClean");
+}
+
 function formatJSON() {
     const obj = readJSON();
     if (obj === undefined) return;
