@@ -250,12 +250,6 @@ button.action.primary:hover {
     box-shadow: none;
 }
 
-input.copy-invalid,
-textarea.copy-invalid {
-    border-color: #fb7185 !important;
-    box-shadow: 0 0 0 3px #fb71851a;
-}
-
 button.action:disabled {
     opacity: .45;
     cursor: not-allowed;
@@ -535,18 +529,8 @@ function setStatus(id, message) {
 
 /* COPY HELPER WITH FALLBACK */
 
-
 async function copyValue(id) {
     const el = document.getElementById(id);
-    const value = el.value.trim();
-
-    el.classList.remove("copy-invalid");
-
-    if (value === "") {
-        el.classList.add("copy-invalid");
-        return;
-    }
-
 
     const statusId =
         id === "jsonClean" ? "jsonStatus" :
@@ -783,17 +767,14 @@ const jsonClean = document.getElementById("jsonClean");
 function readJSON() {
     try {
         const obj = JSON.parse(jsonDirty.value);
-        jsonDirty.classList.remove("copy-invalid");
 
         jsonDirty.classList.remove("invalid");
         return obj;
-    
-} catch (error) {
-    jsonDirty.classList.add("invalid");
-    jsonDirty.classList.add("copy-invalid");
-    setStatus("jsonStatus", "Invalid JSON: " + error.message);
-    return undefined;
-   }
+    } catch (error) {
+        jsonDirty.classList.add("invalid");
+        setStatus("jsonStatus", "Invalid JSON: " + error.message);
+        return undefined;
+    }
 }
 
 async function copyFormattedJSON() {
@@ -869,25 +850,6 @@ jsonClean.addEventListener("input", () => {
     } catch (error) {
         setStatus("jsonStatus", "Output is not valid JSON yet.");
     }
-});
-
-
-
-jsonDirty.addEventListener("input", () => {
-    jsonDirty.classList.remove("copy-invalid");
-    jsonDirty.classList.remove("invalid");
-});
-
-jsonClean.addEventListener("input", () => {
-    jsonClean.classList.remove("copy-invalid");
-});
-
-["unicodeBox", "textBox"].forEach(id => {
-    const el = document.getElementById(id);
-
-    el.addEventListener("input", () => {
-        el.classList.remove("copy-invalid");
-    });
 });
 </script>
 </body>
