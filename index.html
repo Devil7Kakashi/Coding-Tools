@@ -787,11 +787,13 @@ function readJSON() {
 
         jsonDirty.classList.remove("invalid");
         return obj;
-    } catch (error) {
-        jsonDirty.classList.add("invalid");
-        setStatus("jsonStatus", "Invalid JSON: " + error.message);
-        return undefined;
-    }
+    
+} catch (error) {
+    jsonDirty.classList.add("invalid");
+    jsonDirty.classList.add("copy-invalid");
+    setStatus("jsonStatus", "Invalid JSON: " + error.message);
+    return undefined;
+   }
 }
 
 async function copyFormattedJSON() {
