@@ -675,10 +675,7 @@ function updateNumbers(source, base) {
 
     input.classList.remove("invalid");
 
-    if (!value) {
-        setStatus("numberStatus", "");
-        return;
-    }
+    if (!value) return;
 
     const n = parseBase(value, base);
 
