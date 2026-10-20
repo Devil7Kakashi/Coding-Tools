@@ -1,438 +1,818 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
 <title>Coding Tools</title>
 
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    padding:20px;
+:root {
+    --bg: #0b1020;
+    --panel: #121a2c;
+    --panel-light: #19243a;
+    --input: #0d1526;
+    --border: #293750;
+    --text: #edf2ff;
+    --muted: #93a3bd;
+    --accent: #8b5cf6;
+    --accent-hover: #a78bfa;
+    --cyan: #22d3ee;
 }
 
-.tabs{
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
+* {
+    box-sizing: border-box;
 }
 
-.tab{
-    padding:10px 15px;
-    border:none;
-    cursor:pointer;
-    background:#ddd;
-    font-size:20px;
+body {
+    margin: 0;
+    padding: 28px 18px;
+    min-height: 100vh;
+    font-family: system-ui, Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at top, #1c2346 0%, transparent 48%),
+        var(--bg);
 }
 
-.tab.active{
-    background:#2196F3;
-    color:white;
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
 }
 
-.page{
-    display:none;
+.header {
+    margin-bottom: 28px;
 }
 
-.page.active{
-    display:block;
+.header h1 {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 38px);
+    letter-spacing: -1.2px;
+    background: linear-gradient(110deg, #c4b5fd, #67e8f9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-textarea{
-    width:100%;
-    aspect-ratio:1/1;
-    border:2px solid #ccc;
-    border-radius:20px;
-    padding:15px;
-    font-size:20px;
-    box-sizing:border-box;
-    resize:vertical;
-    outline:none;
+.header p {
+    color: var(--muted);
+    margin: 8px 0 0;
+    font-size: 14px;
 }
 
-textarea:focus{
-    border-color:#2196F3;
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 7px;
+    margin-bottom: 22px;
+    background: #11182a;
+    border: 1px solid var(--border);
+    border-radius: 18px;
 }
 
-input{
-    width:100%;
-    height:70px;
-    border:2px solid #ccc;
-    border-radius:20px;
-    padding:15px;
-    font-size:20px;
-    box-sizing:border-box;
-    outline:none;
+.tab {
+    flex: 1;
+    min-width: 150px;
+    padding: 13px 16px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    color: var(--muted);
+    background: transparent;
+    font-size: 14px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background .2s, color .2s, transform .2s;
 }
 
-input:focus{
-    border-color:#2196F3;
+.tab:hover {
+    color: var(--text);
+    background: #202b42;
+}
+
+.tab.active {
+    color: white;
+    background: linear-gradient(120deg, #7044dc, #4c5ed7);
+    box-shadow: 0 5px 18px #6544d833;
+}
+
+.tab:active,
+button:active {
+    transform: scale(.98);
+}
+
+.page {
+    display: none;
+    animation: appear .25s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(7px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    padding: clamp(17px, 3vw, 25px);
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: linear-gradient(
+        145deg,
+        #151e32f5,
+        #101728f5
+    );
+    box-shadow: 0 15px 40px #00000015;
+}
+
+h2, h3 {
+    margin-top: 0;
+    letter-spacing: -.3px;
+}
+
+h2 {
+    font-size: 21px;
+    margin-bottom: 7px;
+}
+
+h3 {
+    font-size: 17px;
+}
+
+.description {
+    margin: 0 0 20px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.field {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin: 0 0 9px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #d6def0;
+}
+
+textarea,
+input,
+select {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #30405c;
+    border-radius: 15px;
+    outline: none;
+    background: var(--input);
+    color: var(--text);
+    font: inherit;
+    font-size: 15px;
+    transition: border-color .2s, box-shadow .2s,
+                background .2s;
+}
+
+textarea {
+    min-height: 160px;
+    resize: vertical;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+textarea::placeholder,
+input::placeholder {
+    color: #62718c;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+    border-color: var(--accent);
+    background: #10192c;
+    box-shadow: 0 0 0 4px #8b5cf61c;
+}
+
+input {
+    min-height: 55px;
+}
+
+input.invalid,
+textarea.invalid {
+    border-color: #fb7185;
+    box-shadow: 0 0 0 3px #fb71851a;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+button.action {
+    padding: 12px 18px;
+    border: 1px solid #354563;
+    border-radius: 12px;
+    background: var(--panel-light);
+    color: var(--text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button.action:hover {
+    filter: brightness(1.15);
+    border-color: #526584;
+}
+
+button.action.primary {
+    border-color: transparent;
+    background: linear-gradient(120deg, #8051e9, #5865e8);
+    color: white;
+}
+
+button.action.primary:hover {
+    box-shadow: 0 5px 20px #8051e933;
+}
+
+button.action:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+.status {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 10px;
+    min-height: 18px;
+    overflow-wrap: anywhere;
+}
+
+.divider {
+    height: 1px;
+    margin: 22px 0;
+    background: var(--border);
+}
+
+.footer {
+    padding: 12px 0;
+    text-align: center;
+    color: #657590;
+    font-size: 12px;
+}
+
+/* Decimal converter */
+
+.number-field {
+    position: relative;
+}
+
+.number-field input {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 17px;
+}
+
+.number-field label {
+    color: #a5b4fc;
+}
+
+/* Small screens */
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .tabs {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .tab {
+        width: 100%;
+        text-align: left;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .card {
+        border-radius: 18px;
+    }
+
+    textarea {
+        min-height: 135px;
+    }
+
+    button.action {
+        flex: 1;
+    }
 }
 </style>
 </head>
+
 <body>
+<div class="container">
 
-<div class="tabs">
-    <button class="tab active"
-        onclick="showPage('unicodePage',this)">
-        Unicode Escape Converter
-    </button>
+    <header class="header">
+        <h1>⌘ Coding Tools</h1>
+        <p>Simple utilities for developers, all in one place.</p>
+    </header>
 
-    <button class="tab"
-        onclick="showPage('decimalPage',this)">
-        Decimal Converter
-    </button>
+    <nav class="tabs">
+        <button class="tab active"
+            onclick="showPage('unicodePage',this)">
+            Unicode Converter
+        </button>
 
-    <button class="tab"
-       onclick="showPage('jsonPage',this)">
-       JSON Cleaner
-    </button>
-</div>
+        <button class="tab"
+            onclick="showPage('decimalPage',this)">
+            Decimal Converter
+        </button>
 
-<!-- Unicode Page -->
+        <button class="tab"
+            onclick="showPage('jsonPage',this)">
+            JSON Cleaner
+        </button>
+    </nav>
 
-<div id="unicodePage" class="page active">
+    <!-- UNICODE CONVERTER -->
 
-<h2>Unicode Escape Sequence Converter</h2>
+    <section id="unicodePage" class="page active">
+        <div class="card">
+            <h2>Unicode Escape Converter</h2>
+            <p class="description">
+                Convert text to Unicode escape sequences and
+                decode Unicode sequences back into readable text.
+            </p>
 
-<textarea id="unicodeBox"
-placeholder="Enter Unicode Escape Sequence"></textarea>
+            <div class="field">
+                <label for="unicodeBox">Unicode escape sequence</label>
+                <textarea id="unicodeBox"
+                    spellcheck="false"
+                    placeholder="Example: \u0048\u0065\u006c\u006c\u006f"></textarea>
+            </div>
 
-<textarea id="textBox"
-placeholder="Enter Text"></textarea>
+            <div class="field">
+                <label for="textBox">Readable text</label>
+                <textarea id="textBox"
+                    placeholder="Type your text here..."></textarea>
+            </div>
 
-</div>
+            <div class="button-row">
+                <button class="action primary"
+                    onclick="copyValue('unicodeBox')">
+                    Copy Unicode
+                </button>
+                <button class="action"
+                    onclick="copyValue('textBox')">
+                    Copy Text
+                </button>
+                <button class="action"
+                    onclick="clearUnicode()">
+                    Clear
+                </button>
+            </div>
 
-<!-- Decimal Page -->
+            <div id="unicodeStatus" class="status"
+                aria-live="polite"></div>
+        </div>
+    </section>
 
-<div id="decimalPage" class="page">
+    <!-- DECIMAL CONVERTER -->
 
-<h2>Decimal Converter</h2>
+    <section id="decimalPage" class="page">
+        <div class="card">
+            <h2>Number Base Converter</h2>
+            <p class="description">
+                Edit any field to convert between decimal,
+                binary, octal, and hexadecimal.
+            </p>
 
-<label>Decimal</label>
-<input type="text" id="decimal" value="0">
+            <div class="field number-field">
+                <label for="decimal">Decimal · Base 10</label>
+                <input type="text" id="decimal"
+                    inputmode="numeric" value="0">
+            </div>
 
-<label>Binary</label>
-<input type="text" id="binary" value="0">
+            <div class="field number-field">
+                <label for="binary">Binary · Base 2</label>
+                <input type="text" id="binary"
+                    value="0" spellcheck="false">
+            </div>
 
-<label>Octal</label>
-<input type="text" id="octal" value="0">
+            <div class="field number-field">
+                <label for="octal">Octal · Base 8</label>
+                <input type="text" id="octal"
+                    value="0" spellcheck="false">
+            </div>
 
-<label>Hex</label>
-<input type="text" id="hex" value="0">
+            <div class="field number-field">
+                <label for="hex">Hexadecimal · Base 16</label>
+                <input type="text" id="hex"
+                    value="0" spellcheck="false">
+            </div>
 
-</div>
+            <div class="button-row">
+                <button class="action"
+                    onclick="copyValue('decimal')">
+                    Copy Decimal
+                </button>
+                <button class="action"
+                    onclick="copyValue('binary')">
+                    Copy Binary
+                </button>
+                <button class="action"
+                    onclick="copyValue('hex')">
+                    Copy Hex
+                </button>
+                <button class="action"
+                    onclick="resetNumbers()">
+                    Reset
+                </button>
+            </div>
 
-<!-- JSON Cleaner Page -->
+            <div id="numberStatus" class="status"
+                aria-live="polite"></div>
+        </div>
+    </section>
 
-<div id="jsonPage" class="page">
+    <!-- JSON CLEANER -->
 
-<h3>JSON Cleaner</h3>
+    <section id="jsonPage" class="page">
+        <div class="card">
+            <h2>JSON Cleaner</h2>
+            <p class="description">
+                Format valid JSON with indentation, or compact it
+                into a single line. Invalid JSON displays an error.
+            </p>
 
-<textarea id="jsonDirty"
-placeholder="Paste Unclean JSON Here"></textarea>
+            <div class="field">
+                <label for="jsonDirty">Input JSON</label>
+                <textarea id="jsonDirty"
+                    spellcheck="false"
+                    placeholder='Paste JSON here...'></textarea>
+            </div>
 
-<textarea id="jsonClean"
-placeholder="Clean JSON Here"></textarea>
+            <div class="button-row">
+                <button class="action primary"
+                    onclick="formatJSON()">
+                    Format JSON
+                </button>
+                <button class="action"
+                    onclick="compactJSON()">
+                    Compact JSON
+                </button>
+                <button class="action"
+                    onclick="copyValue('jsonClean')">
+                    Copy Output
+                </button>
+                <button class="action"
+                    onclick="clearJSON()">
+                    Clear
+                </button>
+            </div>
 
+            <div id="jsonStatus" class="status"
+                aria-live="polite"></div>
+
+            <div class="divider"></div>
+
+            <div class="field">
+                <label for="jsonClean">Formatted output</label>
+                <textarea id="jsonClean"
+                    spellcheck="false"
+                    placeholder="Formatted JSON will appear here..."></textarea>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        Coding Tools · Runs locally in your browser
+    </footer>
 </div>
 
 <script>
-
 /* ==========================
    PAGE SYSTEM
 ========================== */
 
-function showPage(id,btn){
-
-    document.querySelectorAll(".page")
-    .forEach(page=>{
-        page.classList.remove("active");
+function showPage(id, btn) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.toggle("active", page.id === id);
     });
 
-    document.querySelectorAll(".tab")
-    .forEach(tab=>{
-        tab.classList.remove("active");
+    document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.toggle("active", tab === btn);
     });
+}
 
-    document
-    .getElementById(id)
-    .classList.add("active");
+/* ==========================
+   COPY HELPER
+========================== */
 
-    btn.classList.add("active");
+async function copyValue(id) {
+    const el = document.getElementById(id);
+
+    try {
+        await navigator.clipboard.writeText(el.value);
+        setStatus(
+            id === "jsonClean" ? "jsonStatus" :
+            id.includes("Box") ? "unicodeStatus" :
+            "numberStatus",
+            "Copied to clipboard."
+        );
+    } catch {
+        el.focus();
+        el.select();
+
+        const success = document.execCommand("copy");
+
+        setStatus(
+            id === "jsonClean" ? "jsonStatus" :
+            id.includes("Box") ? "unicodeStatus" :
+            "numberStatus",
+            success ? "Copied to clipboard." :
+                "Copy failed. Select and copy manually."
+        );
+    }
+}
+
+function setStatus(id, message) {
+    document.getElementById(id).textContent = message;
 }
 
 /* ==========================
    UNICODE CONVERTER
 ========================== */
 
-const unicodeBox =
-document.getElementById("unicodeBox");
-
-const textBox =
-document.getElementById("textBox");
+const unicodeBox = document.getElementById("unicodeBox");
+const textBox = document.getElementById("textBox");
 
 let updatingUnicode = false;
 
-function encodeUnicode(str){
-    return [...str]
-    .map(ch =>
-        "\\u" +
-        ch.charCodeAt(0)
-        .toString(16)
-        .padStart(4,"0")
-    )
-    .join("");
+function encodeUnicode(str) {
+    return Array.from(str, ch => {
+        const cp = ch.codePointAt(0);
+
+        if (cp <= 0xFFFF) {
+            return "\\u" + cp.toString(16).padStart(4, "0");
+        }
+
+        return "\\u{" + cp.toString(16) + "}";
+    }).join("");
 }
 
-function decodeUnicode(str){
+function decodeUnicode(str) {
+    return str.replace(
+        /\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})/g,
+        (match, braced, regular) => {
+            const cp = parseInt(braced || regular, 16);
 
-    try{
-        return str.replace(
-            /\\u([0-9a-fA-F]{4})/g,
-            (_,hex)=>
-            String.fromCharCode(
-                parseInt(hex,16)
-            )
-        );
-    }
-    catch{
-        return "";
-    }
+            if (cp > 0x10FFFF ||
+                (cp >= 0xD800 && cp <= 0xDFFF)) {
+                return match;
+            }
+
+            return String.fromCodePoint(cp);
+        }
+    );
 }
 
-unicodeBox.addEventListener(
-"input",()=>{
-
-    if(updatingUnicode) return;
+unicodeBox.addEventListener("input", () => {
+    if (updatingUnicode) return;
 
     updatingUnicode = true;
-
-    textBox.value =
-    decodeUnicode(
-        unicodeBox.value
-    );
-
+    textBox.value = decodeUnicode(unicodeBox.value);
     updatingUnicode = false;
+
+    setStatus("unicodeStatus", "Decoded Unicode sequence.");
 });
 
-textBox.addEventListener(
-"input",()=>{
-
-    if(updatingUnicode) return;
+textBox.addEventListener("input", () => {
+    if (updatingUnicode) return;
 
     updatingUnicode = true;
-
-    unicodeBox.value =
-    encodeUnicode(
-        textBox.value
-    );
-
+    unicodeBox.value = encodeUnicode(textBox.value);
     updatingUnicode = false;
+
+    setStatus("unicodeStatus", "Encoded text into Unicode.");
 });
+
+function clearUnicode() {
+    unicodeBox.value = "";
+    textBox.value = "";
+    setStatus("unicodeStatus", "");
+}
 
 /* ==========================
-   DECIMAL CONVERTER
+   NUMBER BASE CONVERTER
 ========================== */
 
-const decimalBox =
-document.getElementById("decimal");
-
-const binaryBox =
-document.getElementById("binary");
-
-const octalBox =
-document.getElementById("octal");
-
-const hexBox =
-document.getElementById("hex");
+const decimalBox = document.getElementById("decimal");
+const binaryBox = document.getElementById("binary");
+const octalBox = document.getElementById("octal");
+const hexBox = document.getElementById("hex");
 
 let updatingNumber = false;
 
-function fromDecimal(){
+function parseBase(value, base) {
+    const input = value.trim();
 
-    let n =
-    parseInt(
-        decimalBox.value || 0,
-        10
-    );
+    if (!input) return null;
 
-    binaryBox.value =
-    n.toString(2);
+    const patterns = {
+        2: /^[01]+$/,
+        8: /^[0-7]+$/,
+        10: /^-?\d+$/,
+        16: /^[0-9a-fA-F]+$/
+    };
 
-    octalBox.value =
-    n.toString(8);
+    if (!patterns[base].test(input)) return null;
 
-    hexBox.value =
-    n.toString(16)
-    .toUpperCase();
+    try {
+        const n = BigInt(input);
+
+        if (n > BigInt(Number.MAX_SAFE_INTEGER) ||
+            n < BigInt(Number.MIN_SAFE_INTEGER)) {
+            return n;
+        }
+
+        return n;
+    } catch {
+        return null;
+    }
 }
 
-function fromBinary(){
+function updateNumbers(source, base) {
+    if (updatingNumber) return;
 
-    let n =
-    parseInt(
-        binaryBox.value || 0,
-        2
-    );
+    const input = document.getElementById(source);
+    const value = input.value.trim();
 
-    decimalBox.value = n;
+    input.classList.remove("invalid");
 
-    octalBox.value =
-    n.toString(8);
+    if (!value) {
+        setStatus("numberStatus", "");
+        return;
+    }
 
-    hexBox.value =
-    n.toString(16)
-    .toUpperCase();
-}
+    const n = parseBase(value, base);
 
-function fromOctal(){
-
-    let n =
-    parseInt(
-        octalBox.value || 0,
-        8
-    );
-
-    decimalBox.value = n;
-
-    binaryBox.value =
-    n.toString(2);
-
-    hexBox.value =
-    n.toString(16)
-    .toUpperCase();
-}
-
-function fromHex(){
-
-    let n =
-    parseInt(
-        hexBox.value || 0,
-        16
-    );
-
-    decimalBox.value = n;
-
-    binaryBox.value =
-    n.toString(2);
-
-    octalBox.value =
-    n.toString(8);
-}
-
-decimalBox.addEventListener(
-"input",()=>{
-
-    if(updatingNumber) return;
+    if (n === null) {
+        input.classList.add("invalid");
+        setStatus("numberStatus", "Invalid value for base " + base + ".");
+        return;
+    }
 
     updatingNumber = true;
 
-    fromDecimal();
+    decimalBox.value = n.toString(10);
+    binaryBox.value = n.toString(2);
+    octalBox.value = n.toString(8);
+    hexBox.value = n.toString(16).toUpperCase();
+
+    [decimalBox, binaryBox, octalBox, hexBox].forEach(el => {
+        el.classList.remove("invalid");
+    });
 
     updatingNumber = false;
-});
+    setStatus("numberStatus", "Converted successfully.");
+}
 
-binaryBox.addEventListener(
-"input",()=>{
+decimalBox.addEventListener("input", () =>
+    updateNumbers("decimal", 10)
+);
 
-    if(updatingNumber) return;
+binaryBox.addEventListener("input", () =>
+    updateNumbers("binary", 2)
+);
 
-    updatingNumber = true;
+octalBox.addEventListener("input", () =>
+    updateNumbers("octal", 8)
+);
 
-    fromBinary();
+hexBox.addEventListener("input", () =>
+    updateNumbers("hex", 16)
+);
 
-    updatingNumber = false;
-});
+function resetNumbers() {
+    decimalBox.value = "0";
+    binaryBox.value = "0";
+    octalBox.value = "0";
+    hexBox.value = "0";
 
-octalBox.addEventListener(
-"input",()=>{
+    [decimalBox, binaryBox, octalBox, hexBox].forEach(el => {
+        el.classList.remove("invalid");
+    });
 
-    if(updatingNumber) return;
-
-    updatingNumber = true;
-
-    fromOctal();
-
-    updatingNumber = false;
-});
-
-hexBox.addEventListener(
-"input",()=>{
-
-    if(updatingNumber) return;
-
-    updatingNumber = true;
-
-    fromHex();
-
-    updatingNumber = false;
-});
+    setStatus("numberStatus", "");
+}
 
 /* ==========================
    JSON CLEANER
 ========================== */
 
-const jsonDirty =
-document.getElementById("jsonDirty");
+const jsonDirty = document.getElementById("jsonDirty");
+const jsonClean = document.getElementById("jsonClean");
 
-const jsonClean =
-document.getElementById("jsonClean");
+function readJSON() {
+    try {
+        const obj = JSON.parse(jsonDirty.value);
+        jsonDirty.classList.remove("invalid");
+        setStatus("jsonStatus", "");
+        return obj;
+    } catch (error) {
+        jsonDirty.classList.add("invalid");
+        setStatus("jsonStatus", "Invalid JSON: " + error.message);
+        return undefined;
+    }
+}
 
-let updatingJson = false;
+function formatJSON() {
+    const obj = readJSON();
+    if (obj === undefined) return;
 
-jsonDirty.addEventListener(
-"input",()=>{
+    jsonClean.value = JSON.stringify(obj, null, 3);
+    jsonClean.classList.remove("invalid");
+    setStatus("jsonStatus", "JSON formatted successfully.");
+}
 
-    if(updatingJson) return;
+function compactJSON() {
+    const obj = readJSON();
+    if (obj === undefined) return;
 
-    updatingJson = true;
+    jsonClean.value = JSON.stringify(obj);
+    jsonClean.classList.remove("invalid");
+    setStatus("jsonStatus", "JSON compacted successfully.");
+}
 
-    try{
+function clearJSON() {
+    jsonDirty.value = "";
+    jsonClean.value = "";
 
-        const obj =
-        JSON.parse(
-            jsonDirty.value
-        );
+    jsonDirty.classList.remove("invalid");
+    jsonClean.classList.remove("invalid");
 
-        jsonClean.value =
-        JSON.stringify(
-            obj,
-            null,
-            3
-        );
+    setStatus("jsonStatus", "");
+}
 
-    }catch{
+jsonDirty.addEventListener("input", () => {
+    jsonDirty.classList.remove("invalid");
 
+    if (!jsonDirty.value.trim()) {
         jsonClean.value = "";
+        setStatus("jsonStatus", "");
+        return;
     }
 
-    updatingJson = false;
+    try {
+        const obj = JSON.parse(jsonDirty.value);
+        jsonClean.value = JSON.stringify(obj, null, 3);
+        setStatus("jsonStatus", "Valid JSON.");
+    } catch {
+        jsonClean.value = "";
+        setStatus("jsonStatus", "Waiting for valid JSON...");
+    }
 });
 
-jsonClean.addEventListener(
-"input",()=>{
+jsonClean.addEventListener("input", () => {
+    jsonClean.classList.remove("invalid");
 
-    if(updatingJson) return;
+    if (!jsonClean.value.trim()) return;
 
-    updatingJson = true;
-
-    try{
-
-        const obj =
-        JSON.parse(
-            jsonClean.value
-        );
-
-        jsonDirty.value =
-        JSON.stringify(obj);
-
-    }catch{}
-
-    updatingJson = false;
+    try {
+        const obj = JSON.parse(jsonClean.value);
+        jsonDirty.value = JSON.stringify(obj);
+        jsonDirty.classList.remove("invalid");
+        setStatus("jsonStatus", "JSON synchronized.");
+    } catch {
+        setStatus("jsonStatus", "Output is not valid JSON yet.");
+    }
 });
-
 </script>
-
 </body>
 </html>
