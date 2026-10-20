@@ -127,11 +127,7 @@ button:active {
     margin-bottom: 20px;
     border: 1px solid var(--border);
     border-radius: 22px;
-    background: linear-gradient(
-        145deg,
-        #151e32f5,
-        #101728f5
-    );
+    background: linear-gradient(145deg, #151e32f5, #101728f5);
     box-shadow: 0 15px 40px #00000015;
 }
 
@@ -181,8 +177,7 @@ select {
     color: var(--text);
     font: inherit;
     font-size: 15px;
-    transition: border-color .2s, box-shadow .2s,
-                background .2s;
+    transition: border-color .2s, box-shadow .2s, background .2s;
 }
 
 textarea {
@@ -247,7 +242,6 @@ button.action:hover {
 }
 
 button.action.primary {
-    border: 1px solid #354563;
     background: var(--panel-light);
     color: var(--text);
 }
@@ -282,8 +276,6 @@ button.action:disabled {
     font-size: 12px;
 }
 
-/* Decimal converter */
-
 .number-field {
     position: relative;
 }
@@ -296,8 +288,6 @@ button.action:disabled {
 .number-field label {
     color: #a5b4fc;
 }
-
-/* Small screens */
 
 @media (max-width: 600px) {
     body {
@@ -344,17 +334,17 @@ button.action:disabled {
 
     <nav class="tabs">
         <button class="tab active"
-            onclick="showPage('unicodePage',this)">
+            onclick="showPage('unicodePage', this)">
             Unicode Converter
         </button>
 
         <button class="tab"
-            onclick="showPage('decimalPage',this)">
+            onclick="showPage('decimalPage', this)">
             Decimal Converter
         </button>
 
         <button class="tab"
-            onclick="showPage('jsonPage',this)">
+            onclick="showPage('jsonPage', this)">
             JSON Cleaner
         </button>
     </nav>
@@ -402,7 +392,7 @@ button.action:disabled {
         </div>
     </section>
 
-    <!-- DECIMAL CONVERTER -->
+    <!-- NUMBER BASE CONVERTER -->
 
     <section id="decimalPage" class="page">
         <div class="card">
@@ -470,7 +460,7 @@ button.action:disabled {
         <div class="card">
             <h2>JSON Cleaner</h2>
             <p class="description">
-                Format valid JSON with indentation, or compact it
+                Format valid JSON with indentation or compact it
                 into a single line. Invalid JSON displays an error.
             </p>
 
@@ -480,26 +470,23 @@ button.action:disabled {
                     spellcheck="false"
                     placeholder='Paste JSON here...'></textarea>
             </div>
-            
-            
-<div class="button-row">
-    <button class="action primary"
-        onclick="copyFormattedJSON()">
-        Copy Formatted
-    </button>
 
-    <button class="action"
-        onclick="copyCompactJSON()">
-        Copy Compact
-    </button>
+            <div class="button-row">
+                <button class="action primary"
+                    onclick="copyFormattedJSON()">
+                    Copy Formatted
+                </button>
 
-    <button class="action"
-        onclick="clearJSON()">
-        Clear
-    </button>
-</div>
+                <button class="action"
+                    onclick="copyCompactJSON()">
+                    Copy Compact
+                </button>
 
-
+                <button class="action"
+                    onclick="clearJSON()">
+                    Clear
+                </button>
+            </div>
 
             <div id="jsonStatus" class="status"
                 aria-live="polite"></div>
@@ -518,12 +505,11 @@ button.action:disabled {
     <footer class="footer">
         Coding Tools · Runs locally in your browser
     </footer>
+
 </div>
 
 <script>
-/* ==========================
-   PAGE SYSTEM
-========================== */
+/* PAGE SYSTEM */
 
 function showPage(id, btn) {
     document.querySelectorAll(".page").forEach(page => {
@@ -535,44 +521,71 @@ function showPage(id, btn) {
     });
 }
 
-/* ==========================
-   COPY HELPER
-========================== */
-
-async function copyValue(id) {
-    const el = document.getElementById(id);
-
-    try {
-        await navigator.clipboard.writeText(el.value);
-        setStatus(
-            id === "jsonClean" ? "jsonStatus" :
-            id.includes("Box") ? "unicodeStatus" :
-            "numberStatus",
-            "Copied to clipboard."
-        );
-    } catch {
-        el.focus();
-        el.select();
-
-        const success = document.execCommand("copy");
-
-        setStatus(
-            id === "jsonClean" ? "jsonStatus" :
-            id.includes("Box") ? "unicodeStatus" :
-            "numberStatus",
-            success ? "Copied to clipboard." :
-                "Copy failed. Select and copy manually."
-        );
-    }
-}
+/* STATUS MESSAGE */
 
 function setStatus(id, message) {
     document.getElementById(id).textContent = message;
 }
 
-/* ==========================
-   UNICODE CONVERTER
-========================== */
+/* COPY HELPER WITH FALLBACK */
+
+async function copyValue(id) {
+    const el = document.getElementById(id);
+
+    const statusId =
+        id === "jsonClean" ? "jsonStatus" :
+        id.includes("Box") ? "unicodeStatus" :
+        "numberStatus";
+
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(el.value);
+            setStatus(statusId, "Copied to clipboard!");
+            return;
+        }
+    } catch (error) {
+        // Try the fallback below.
+    }
+
+    let temp = null;
+
+    try {
+        temp = document.createElement("textarea");
+        temp.value = el.value;
+        temp.setAttribute("readonly", "");
+        temp.style.position = "fixed";
+        temp.style.top = "0";
+        temp.style.left = "0";
+        temp.style.opacity = "0";
+
+        document.body.appendChild(temp);
+        temp.focus();
+        temp.select();
+        temp.setSelectionRange(0, temp.value.length);
+
+        const success = document.execCommand("copy");
+
+        if (success) {
+            setStatus(statusId, "Copied to clipboard!");
+        } else {
+            setStatus(
+                statusId,
+                "Automatic copy failed. Select the output and copy it manually."
+            );
+        }
+    } catch (error) {
+        setStatus(
+            statusId,
+            "Copy failed. Please select the text and copy it manually."
+        );
+    } finally {
+        if (temp && temp.parentNode) {
+            temp.parentNode.removeChild(temp);
+        }
+    }
+}
+
+/* UNICODE CONVERTER */
 
 const unicodeBox = document.getElementById("unicodeBox");
 const textBox = document.getElementById("textBox");
@@ -597,8 +610,10 @@ function decodeUnicode(str) {
         (match, braced, regular) => {
             const cp = parseInt(braced || regular, 16);
 
-            if (cp > 0x10FFFF ||
-                (cp >= 0xD800 && cp <= 0xDFFF)) {
+            if (
+                cp > 0x10FFFF ||
+                (cp >= 0xD800 && cp <= 0xDFFF)
+            ) {
                 return match;
             }
 
@@ -633,9 +648,7 @@ function clearUnicode() {
     setStatus("unicodeStatus", "");
 }
 
-/* ==========================
-   NUMBER BASE CONVERTER
-========================== */
+/* NUMBER BASE CONVERTER */
 
 const decimalBox = document.getElementById("decimal");
 const binaryBox = document.getElementById("binary");
@@ -643,7 +656,6 @@ const octalBox = document.getElementById("octal");
 const hexBox = document.getElementById("hex");
 
 let updatingNumber = false;
-
 
 function parseBase(value, base) {
     const input = value.trim();
@@ -659,24 +671,20 @@ function parseBase(value, base) {
 
     if (!patterns[base].test(input)) return null;
 
-    try {
-        const negative = input.startsWith("-");
-        const digits = negative ? input.slice(1) : input;
+    const negative = input.startsWith("-");
+    const digits = negative ? input.slice(1) : input;
 
-        let result = 0n;
+    let result = 0n;
 
-        for (const char of digits.toLowerCase()) {
-            const digit = parseInt(char, 16);
+    for (const char of digits.toLowerCase()) {
+        const digit = parseInt(char, 16);
 
-            if (digit >= base) return null;
+        if (digit >= base) return null;
 
-            result = result * BigInt(base) + BigInt(digit);
-        }
-
-        return negative ? -result : result;
-    } catch {
-        return null;
+        result = result * BigInt(base) + BigInt(digit);
     }
+
+    return negative ? -result : result;
 }
 
 function updateNumbers(source, base) {
@@ -689,7 +697,13 @@ function updateNumbers(source, base) {
 
     if (!value) return;
 
-    const n = parseBase(value, base);
+    let n;
+
+    try {
+        n = parseBase(value, base);
+    } catch (error) {
+        n = null;
+    }
 
     if (n === null) {
         input.classList.add("invalid");
@@ -745,9 +759,7 @@ function resetNumbers() {
     setStatus("numberStatus", "");
 }
 
-/* ==========================
-   JSON CLEANER
-========================== */
+/* JSON CLEANER */
 
 const jsonDirty = document.getElementById("jsonDirty");
 const jsonClean = document.getElementById("jsonClean");
@@ -755,8 +767,8 @@ const jsonClean = document.getElementById("jsonClean");
 function readJSON() {
     try {
         const obj = JSON.parse(jsonDirty.value);
+
         jsonDirty.classList.remove("invalid");
-        setStatus("jsonStatus", "");
         return obj;
     } catch (error) {
         jsonDirty.classList.add("invalid");
@@ -767,6 +779,7 @@ function readJSON() {
 
 async function copyFormattedJSON() {
     const obj = readJSON();
+
     if (obj === undefined) return;
 
     jsonClean.value = JSON.stringify(obj, null, 3);
@@ -777,30 +790,13 @@ async function copyFormattedJSON() {
 
 async function copyCompactJSON() {
     const obj = readJSON();
+
     if (obj === undefined) return;
 
     jsonClean.value = JSON.stringify(obj);
     jsonClean.classList.remove("invalid");
 
     await copyValue("jsonClean");
-}
-
-function formatJSON() {
-    const obj = readJSON();
-    if (obj === undefined) return;
-
-    jsonClean.value = JSON.stringify(obj, null, 3);
-    jsonClean.classList.remove("invalid");
-    setStatus("jsonStatus", "JSON formatted successfully.");
-}
-
-function compactJSON() {
-    const obj = readJSON();
-    if (obj === undefined) return;
-
-    jsonClean.value = JSON.stringify(obj);
-    jsonClean.classList.remove("invalid");
-    setStatus("jsonStatus", "JSON compacted successfully.");
 }
 
 function clearJSON() {
@@ -813,6 +809,8 @@ function clearJSON() {
     setStatus("jsonStatus", "");
 }
 
+/* LIVE JSON VALIDATION AND FORMATTED PREVIEW */
+
 jsonDirty.addEventListener("input", () => {
     jsonDirty.classList.remove("invalid");
 
@@ -824,13 +822,18 @@ jsonDirty.addEventListener("input", () => {
 
     try {
         const obj = JSON.parse(jsonDirty.value);
+
         jsonClean.value = JSON.stringify(obj, null, 3);
+        jsonClean.classList.remove("invalid");
+
         setStatus("jsonStatus", "Valid JSON.");
-    } catch {
+    } catch (error) {
         jsonClean.value = "";
         setStatus("jsonStatus", "Waiting for valid JSON...");
     }
 });
+
+/* SYNC EDITS FROM OUTPUT BACK TO INPUT */
 
 jsonClean.addEventListener("input", () => {
     jsonClean.classList.remove("invalid");
@@ -839,10 +842,12 @@ jsonClean.addEventListener("input", () => {
 
     try {
         const obj = JSON.parse(jsonClean.value);
+
         jsonDirty.value = JSON.stringify(obj);
         jsonDirty.classList.remove("invalid");
+
         setStatus("jsonStatus", "JSON synchronized.");
-    } catch {
+    } catch (error) {
         setStatus("jsonStatus", "Output is not valid JSON yet.");
     }
 });
