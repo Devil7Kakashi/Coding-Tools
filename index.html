@@ -783,6 +783,7 @@ const jsonClean = document.getElementById("jsonClean");
 function readJSON() {
     try {
         const obj = JSON.parse(jsonDirty.value);
+        jsonDirty.classList.remove("copy-invalid");
 
         jsonDirty.classList.remove("invalid");
         return obj;
