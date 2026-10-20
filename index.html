@@ -480,25 +480,24 @@ button.action:disabled {
                     spellcheck="false"
                     placeholder='Paste JSON here...'></textarea>
             </div>
-
+            
             <div class="button-row">
                 <button class="action primary"
-                    onclick="formatJSON()">
-                    Format JSON
-                </button>
-                <button class="action"
-                    onclick="compactJSON()">
-                    Compact JSON
-                </button>
-                <button class="action"
-                    onclick="copyValue('jsonClean')">
-                    Copy Output
-                </button>
-                <button class="action"
-                    onclick="clearJSON()">
-                    Clear
-                </button>
-            </div>
+                   onclick="formatJSON()">
+                   Copy Formatted
+            </button>
+
+            <button class="action"
+                   onclick="copyCompactJSON()">
+                   Copy Compact
+            </button>
+
+            <button class="action"
+                   onclick="clearJSON()">
+                   Clear
+            </button>
+        </div>
+
 
             <div id="jsonStatus" class="status"
                 aria-live="polite"></div>
