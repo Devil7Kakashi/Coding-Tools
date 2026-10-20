@@ -870,6 +870,19 @@ jsonClean.addEventListener("input", () => {
         setStatus("jsonStatus", "Output is not valid JSON yet.");
     }
 });
+
+
+jsonDirty.addEventListener("input", () => {
+    jsonDirty.classList.remove("copy-invalid");
+});
+
+["unicodeBox", "textBox"].forEach(id => {
+    const el = document.getElementById(id);
+
+    el.addEventListener("input", () => {
+        el.classList.remove("copy-invalid");
+    });
+});
 </script>
 </body>
 </html>
