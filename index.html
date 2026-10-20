@@ -872,8 +872,14 @@ jsonClean.addEventListener("input", () => {
 });
 
 
+
 jsonDirty.addEventListener("input", () => {
     jsonDirty.classList.remove("copy-invalid");
+    jsonDirty.classList.remove("invalid");
+});
+
+jsonClean.addEventListener("input", () => {
+    jsonClean.classList.remove("copy-invalid");
 });
 
 ["unicodeBox", "textBox"].forEach(id => {
