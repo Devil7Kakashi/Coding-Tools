@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,323 +9,190 @@
 
 <style>
 :root {
-    --bg: #0b1020;
-    --panel: #121a2c;
-    --panel-light: #19243a;
-    --input: #0d1526;
-    --border: #293750;
-    --text: #edf2ff;
-    --muted: #93a3bd;
-    --accent: #8b5cf6;
-    --accent-hover: #a78bfa;
-    --cyan: #22d3ee;
+  --bg:#0b1020; --panel:#121a2c; --panel-light:#19243a;
+  --input:#0d1526; --border:#293750; --text:#edf2ff;
+  --muted:#93a3bd; --accent:#8b5cf6; --cyan:#22d3ee;
 }
-
-* {
-    box-sizing: border-box;
-}
-
+* { box-sizing:border-box; }
 body {
-    margin: 0;
-    padding: 28px 18px;
-    min-height: 100vh;
-    font-family: system-ui, Arial, sans-serif;
-    color: var(--text);
-    background:
-        radial-gradient(ellipse at top, #1c2346 0%, transparent 48%),
-        var(--bg);
+  margin:0; padding:28px 18px; min-height:100vh;
+  font-family:system-ui,Arial,sans-serif; color:var(--text);
+  background:radial-gradient(ellipse at top,#1c2346 0%,transparent 48%),var(--bg);
 }
-
-.container {
-    max-width: 1050px;
-    margin: 0 auto;
-}
-
-.header {
-    margin-bottom: 28px;
-}
-
+.container { max-width:1050px; margin:0 auto; }
+.header { margin-bottom:28px; }
 .header h1 {
-    margin: 0;
-    font-size: clamp(28px, 5vw, 38px);
-    letter-spacing: -1.2px;
-    background: linear-gradient(110deg, #c4b5fd, #67e8f9);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+  margin:0; font-size:clamp(28px,5vw,38px); letter-spacing:-1.2px;
+  background:linear-gradient(110deg,#c4b5fd,#67e8f9);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
 }
-
-.header p {
-    color: var(--muted);
-    margin: 8px 0 0;
-    font-size: 14px;
-}
-
+.header p { color:var(--muted); margin:8px 0 0; font-size:14px; }
 .tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 7px;
-    margin-bottom: 22px;
-    background: #11182a;
-    border: 1px solid var(--border);
-    border-radius: 18px;
+  display:flex; flex-wrap:wrap; gap:8px; padding:7px;
+  margin-bottom:22px; background:#11182a;
+  border:1px solid var(--border); border-radius:18px;
 }
-
 .tab {
-    flex: 1;
-    min-width: 150px;
-    padding: 13px 16px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    color: var(--muted);
-    background: transparent;
-    font-size: 14px;
-    font-weight: 650;
-    cursor: pointer;
-    transition: background .2s, color .2s, transform .2s;
+  flex:1; min-width:150px; padding:13px 16px;
+  border:1px solid transparent; border-radius:12px;
+  color:var(--muted); background:transparent;
+  font-size:14px; font-weight:650; cursor:pointer; transition:.2s;
 }
-
-.tab:hover {
-    color: var(--text);
-    background: #202b42;
-}
-
+.tab:hover { color:var(--text); background:#202b42; }
 .tab.active {
-    color: white;
-    background: linear-gradient(120deg, #7044dc, #4c5ed7);
-    box-shadow: 0 5px 18px #6544d833;
+  color:white; background:linear-gradient(120deg,#7044dc,#4c5ed7);
+  box-shadow:0 5px 18px #6544d833;
 }
-
-.tab:active,
-button:active {
-    transform: scale(.98);
-}
-
-.page {
-    display: none;
-    animation: appear .25s ease;
-}
-
-.page.active {
-    display: block;
-}
-
+.page { display:none; animation:appear .25s ease; }
+.page.active { display:block; }
 @keyframes appear {
-    from {
-        opacity: 0;
-        transform: translateY(7px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity:0; transform:translateY(7px); }
+  to { opacity:1; transform:translateY(0); }
 }
-
 .card {
-    padding: clamp(17px, 3vw, 25px);
-    margin-bottom: 20px;
-    border: 1px solid var(--border);
-    border-radius: 22px;
-    background: linear-gradient(145deg, #151e32f5, #101728f5);
-    box-shadow: 0 15px 40px #00000015;
+  padding:clamp(17px,3vw,25px); margin-bottom:20px;
+  border:1px solid var(--border); border-radius:22px;
+  background:linear-gradient(145deg,#151e32f5,#101728f5);
+  box-shadow:0 15px 40px #00000015;
 }
-
-h2, h3 {
-    margin-top: 0;
-    letter-spacing: -.3px;
-}
-
-h2 {
-    font-size: 21px;
-    margin-bottom: 7px;
-}
-
-h3 {
-    font-size: 17px;
-}
-
+h2,h3 { margin-top:0; letter-spacing:-.3px; }
+h2 { font-size:21px; margin-bottom:7px; }
+h3 { font-size:17px; }
 .description {
-    margin: 0 0 20px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.7;
+  margin:0 0 20px; color:var(--muted);
+  font-size:13px; line-height:1.7;
 }
-
-.field {
-    margin-bottom: 18px;
-}
-
+.field { margin-bottom:18px; }
 label {
-    display: block;
-    margin: 0 0 9px;
-    font-size: 13px;
-    font-weight: 700;
-    color: #d6def0;
+  display:block; margin:0 0 9px; font-size:13px;
+  font-weight:700; color:#d6def0;
 }
-
-textarea,
-input,
-select {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #30405c;
-    border-radius: 15px;
-    outline: none;
-    background: var(--input);
-    color: var(--text);
-    font: inherit;
-    font-size: 15px;
-    transition: border-color .2s, box-shadow .2s, background .2s;
+textarea,input,select {
+  display:block; width:100%; padding:15px;
+  border:1px solid #30405c; border-radius:15px;
+  outline:none; background:var(--input); color:var(--text);
+  font:inherit; font-size:15px; transition:.2s;
 }
-
 textarea {
-    min-height: 160px;
-    resize: none;
-    line-height: 1.65;
-    overflow-wrap: anywhere;
+  min-height:160px; resize:vertical; line-height:1.65;
+  overflow-wrap:anywhere;
 }
-
-textarea::placeholder,
-input::placeholder {
-    color: #62718c;
+textarea::placeholder,input::placeholder { color:#62718c; }
+textarea:focus,input:focus,select:focus {
+  border-color:var(--accent); background:#10192c;
+  box-shadow:0 0 0 4px #8b5cf61c;
 }
-
-textarea:focus,
-input:focus,
-select:focus {
-    border-color: var(--accent);
-    background: #10192c;
-    box-shadow: 0 0 0 4px #8b5cf61c;
+input { min-height:55px; }
+input.invalid,textarea.invalid,input.copy-invalid,textarea.copy-invalid {
+  border-color:#fb7185; box-shadow:0 0 0 3px #fb71851a;
 }
-
-input {
-    min-height: 55px;
-}
-
-input.invalid,
-textarea.invalid {
-    border-color: #fb7185;
-    box-shadow: 0 0 0 3px #fb71851a;
-}
-
-input.copy-invalid,
-textarea.copy-invalid {
-    border-color: #fb7185 !important;
-    box-shadow: 0 0 0 3px #fb71851a;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
-}
-
-.button-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
-}
-
+.button-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
 button.action {
-    padding: 12px 18px;
-    border: 1px solid #354563;
-    border-radius: 12px;
-    background: var(--panel-light);
-    color: var(--text);
-    font: inherit;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .2s;
+  padding:12px 18px; border:1px solid #354563;
+  border-radius:12px; background:var(--panel-light);
+  color:var(--text); font:inherit; font-size:14px;
+  font-weight:700; cursor:pointer; transition:.2s;
 }
-
-button.action:hover {
-    filter: brightness(1.15);
-    border-color: #526584;
-}
-
-button.action.primary {
-    background: var(--panel-light);
-    color: var(--text);
-}
-
-button.action.primary:hover {
-    box-shadow: none;
-}
-
-button.action:disabled {
-    opacity: .45;
-    cursor: not-allowed;
-}
-
+button.action:hover { filter:brightness(1.15); border-color:#526584; }
+button.action:disabled { opacity:.45; cursor:not-allowed; }
 .status {
-    color: var(--muted);
-    font-size: 12px;
-    margin-top: 10px;
-    min-height: 18px;
-    overflow-wrap: anywhere;
+  color:var(--muted); font-size:12px; margin-top:10px;
+  min-height:18px; overflow-wrap:anywhere;
+}
+.divider { height:1px; margin:22px 0; background:var(--border); }
+.footer { padding:18px 0 8px; text-align:center; color:#657590; font-size:12px; }
+.number-field input { font-family:Consolas,monospace; font-size:17px; }
+.number-field label { color:#a5b4fc; }
+
+/* QR HOME */
+#qrPage .qr-hidden { display:none !important; }
+#qrPage .qr-action-grid {
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px; margin:22px 0;
+}
+#qrPage .qr-action {
+  min-height:142px; padding:22px 16px;
+  border:1px solid #354563; border-radius:18px;
+  background:var(--panel-light); color:var(--text);
+  font:inherit; font-weight:700; line-height:1.5;
+  cursor:pointer; transition:.2s;
+}
+#qrPage .qr-action:hover {
+  border-color:var(--accent); background:#202b42;
+  transform:translateY(-2px);
+}
+#qrPage .qr-action .qr-note { margin:8px 0 0; font-weight:400; }
+
+/* QR PANELS */
+#qrPage .qr-panel {
+  margin-top:16px; padding:clamp(16px,3vw,24px);
+  border:1px solid var(--border); border-radius:18px;
+  background:linear-gradient(145deg,#151e32f5,#101728f5);
+}
+#qrPage .qr-panel h3 { margin-bottom:16px; }
+#qrPage .qr-panel .field { margin-bottom:20px; }
+#qrPage .qr-panel .button-row { gap:10px; margin:18px 0; }
+#qrPage .qr-btn {
+  min-height:44px; padding:12px 16px;
+  border:1px solid #354563; border-radius:12px;
+  background:var(--panel-light); color:var(--text);
+  font:inherit; font-size:14px; font-weight:700; cursor:pointer;
+}
+#qrPage .qr-btn:hover:not(:disabled) { border-color:var(--accent); filter:brightness(1.1); }
+#qrPage .qr-btn:disabled { opacity:.45; cursor:not-allowed; }
+#qrPage .qr-secondary { background:#0d1526; }
+#qrPage .qr-status {
+  margin:12px 0; color:var(--muted); font-size:13px;
+  min-height:20px; overflow-wrap:anywhere;
+}
+#qrPage .qr-note {
+  margin:12px 0 0; color:var(--muted);
+  font-size:12px; line-height:1.6;
 }
 
-.divider {
-    height: 1px;
-    margin: 22px 0;
-    background: var(--border);
+/* QR PREVIEW */
+#qrPage .qr-preview {
+  display:flex; justify-content:center; align-items:center;
+  aspect-ratio:1/1; width:min(100%,340px);
+  margin:22px auto; padding:14px; overflow:hidden;
+  background:#f8fafc; border-radius:16px; color:#334155;
+  box-shadow:0 10px 28px #0003; text-align:center;
+}
+#qrPage .qr-preview canvas,#qrPage .qr-preview img {
+  display:block; width:100% !important; height:auto !important;
+  max-width:100%; max-height:100%; object-fit:contain;
 }
 
-.footer {
-    padding: 12px 0;
-    text-align: center;
-    color: #657590;
-    font-size: 12px;
+/* SQUARE CAMERA VIEW */
+#qrPage .qr-camera-box {
+  position:relative; aspect-ratio:1/1; width:min(100%,420px);
+  margin:22px auto; overflow:hidden;
+  border:1px solid #354563; border-radius:18px;
+  background:#05070b; box-shadow:0 10px 28px #0003;
 }
-
-.number-field {
-    position: relative;
+#qrPage #qrVideo {
+  position:absolute; inset:0; display:block;
+  width:100%; height:100%; object-fit:cover;
+  background:#05070b; margin:0; padding:0; border:0;
+  border-radius:0;
 }
-
-.number-field input {
-    font-family: "SFMono-Regular", Consolas, monospace;
-    font-size: 17px;
+#qrPage .qr-result {
+  overflow-wrap:anywhere; white-space:pre-wrap;
+  padding:14px; min-height:48px;
+  border:1px solid var(--border); border-radius:12px;
+  background:var(--input);
 }
-
-.number-field label {
-    color: #a5b4fc;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 20px 12px;
-    }
-
-    .tabs {
-        display: grid;
-        grid-template-columns: 1fr;
-    }
-
-    .tab {
-        width: 100%;
-        text-align: left;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-
-    .card {
-        border-radius: 18px;
-    }
-
-    textarea {
-        min-height: 135px;
-    }
-
-    button.action {
-        flex: 1;
-    }
+@media(max-width:600px) {
+  body { padding:20px 12px; }
+  .tabs { display:grid; grid-template-columns:1fr; }
+  .tab { width:100%; text-align:left; }
+  .card { border-radius:18px; }
+  textarea { min-height:135px; }
+  button.action { flex:1; }
+  #qrPage .qr-action { min-height:126px; padding:16px 10px; }
+  #qrPage .qr-panel { padding:16px; }
+  #qrPage .qr-btn { flex:1; }
+  #qrPage .qr-action-grid { gap:10px; }
 }
 </style>
 </head>
@@ -332,573 +200,882 @@ button.action:disabled {
 <body>
 <div class="container">
 
-    <header class="header">
-        <h1>⌘ Coding Tools</h1>
-        <p>Simple utilities for developers, all in one place.</p>
-    </header>
+<header class="header">
+  <h1>⌘ Coding Tools</h1>
+  <p>Simple utilities for developers, all in one place.</p>
+</header>
 
-    <nav class="tabs">
-        <button class="tab active"
-            onclick="showPage('unicodePage', this)">
-            Unicode Converter
-        </button>
+<nav class="tabs">
+  <button class="tab active" onclick="showPage('unicodePage',this)">Unicode Converter</button>
+  <button class="tab" onclick="showPage('decimalPage',this)">Decimal Converter</button>
+  <button class="tab" onclick="showPage('jsonPage',this)">JSON Cleaner</button>
+  <button class="tab" onclick="showPage('qrPage',this)">QR Code Generator &amp; Scanner</button>
+</nav>
 
-        <button class="tab"
-            onclick="showPage('decimalPage', this)">
-            Decimal Converter
-        </button>
+<!-- UNICODE CONVERTER -->
+<section id="unicodePage" class="page active">
+<div class="card">
+  <h2>Unicode Escape Converter</h2>
+  <p class="description">Convert text to Unicode escape sequences and decode Unicode sequences back into readable text.</p>
 
-        <button class="tab"
-            onclick="showPage('jsonPage', this)">
-            JSON Cleaner
-        </button>
-    </nav>
+  <div class="field">
+    <label for="unicodeBox">Unicode escape sequence</label>
+    <textarea id="unicodeBox" spellcheck="false" placeholder="Example: \u0048\u0065\u006c\u006c\u006f"></textarea>
+  </div>
+  <div class="field">
+    <label for="textBox">Readable text</label>
+    <textarea id="textBox" placeholder="Type your text here..."></textarea>
+  </div>
+  <div class="button-row">
+    <button class="action" onclick="copyValue('unicodeBox')">Copy Unicode</button>
+    <button class="action" onclick="copyValue('textBox')">Copy Text</button>
+    <button class="action" onclick="clearUnicode()">Clear</button>
+  </div>
+  <div id="unicodeStatus" class="status" aria-live="polite"></div>
+</div>
+</section>
 
-    <!-- UNICODE CONVERTER -->
+<!-- NUMBER BASE CONVERTER -->
+<section id="decimalPage" class="page">
+<div class="card">
+  <h2>Number Base Converter</h2>
+  <p class="description">Edit any field to convert between decimal, binary, octal, and hexadecimal.</p>
 
-    <section id="unicodePage" class="page active">
-        <div class="card">
-            <h2>Unicode Escape Converter</h2>
-            <p class="description">
-                Convert text to Unicode escape sequences and
-                decode Unicode sequences back into readable text.
-            </p>
+  <div class="field number-field">
+    <label for="decimal">Decimal · Base 10</label>
+    <input id="decimal" inputmode="numeric" value="0">
+  </div>
+  <div class="field number-field">
+    <label for="binary">Binary · Base 2</label>
+    <input id="binary" value="0" spellcheck="false">
+  </div>
+  <div class="field number-field">
+    <label for="octal">Octal · Base 8</label>
+    <input id="octal" value="0" spellcheck="false">
+  </div>
+  <div class="field number-field">
+    <label for="hex">Hexadecimal · Base 16</label>
+    <input id="hex" value="0" spellcheck="false">
+  </div>
+  <div class="button-row">
+    <button class="action" onclick="copyValue('decimal')">Copy Decimal</button>
+    <button class="action" onclick="copyValue('binary')">Copy Binary</button>
+    <button class="action" onclick="copyValue('octal')">Copy Octal</button>
+    <button class="action" onclick="copyValue('hex')">Copy Hex</button>
+    <button class="action" onclick="resetNumbers()">Reset</button>
+  </div>
+  <div id="numberStatus" class="status" aria-live="polite"></div>
+</div>
+</section>
 
-            <div class="field">
-                <label for="unicodeBox">Unicode escape sequence</label>
-                <textarea id="unicodeBox"
-                    spellcheck="false"
-                    placeholder="Example: \u0048\u0065\u006c\u006c\u006f"></textarea>
-            </div>
+<!-- JSON CLEANER -->
+<section id="jsonPage" class="page">
+<div class="card">
+  <h2>JSON Cleaner</h2>
+  <p class="description">Format valid JSON with indentation or compact it into a single line. Invalid JSON displays an error.</p>
 
-            <div class="field">
-                <label for="textBox">Readable text</label>
-                <textarea id="textBox"
-                    placeholder="Type your text here..."></textarea>
-            </div>
+  <div class="field">
+    <label for="jsonDirty">Input JSON</label>
+    <textarea id="jsonDirty" spellcheck="false" placeholder="Paste JSON here..."></textarea>
+  </div>
+  <div class="button-row">
+    <button class="action" onclick="copyFormattedJSON()">Copy Formatted</button>
+    <button class="action" onclick="copyCompactJSON()">Copy Compact</button>
+    <button class="action" onclick="clearJSON()">Clear</button>
+  </div>
+  <div id="jsonStatus" class="status" aria-live="polite"></div>
+  <div class="divider"></div>
+  <div class="field">
+    <label for="jsonClean">Formatted output</label>
+    <textarea id="jsonClean" spellcheck="false" placeholder="Formatted JSON will appear here..."></textarea>
+  </div>
+</div>
+</section>
 
-            <div class="button-row">
-                <button class="action primary"
-                    onclick="copyValue('unicodeBox')">
-                    Copy Unicode
-                </button>
-                <button class="action"
-                    onclick="copyValue('textBox')">
-                    Copy Text
-                </button>
-                <button class="action"
-                    onclick="clearUnicode()">
-                    Clear
-                </button>
-            </div>
+<!-- QR GENERATOR AND SCANNER -->
+<section id="qrPage" class="page">
+<div class="card">
+  <h2>QR Code Generator &amp; Scanner</h2>
+  <p class="description">Generate QR codes from URLs or text. Scan QR codes using your camera or an image.</p>
 
-            <div id="unicodeStatus" class="status"
-                aria-live="polite"></div>
-        </div>
-    </section>
+  <div id="qrHome" class="qr-action-grid">
+    <button class="qr-action" onclick="qrOpenSection('generator')" type="button">
+      <span style="font-size:2rem">▦</span><br>
+      QR Code Generator
+      <p class="qr-note">Any URL or text</p>
+    </button>
+    <button class="qr-action" onclick="qrOpenSection('scanner')" type="button">
+      <span style="font-size:2rem">⌗</span><br>
+      QR Code Scanner
+      <p class="qr-note">Camera or gallery image</p>
+    </button>
+  </div>
 
-    <!-- NUMBER BASE CONVERTER -->
+  <!-- GENERATOR -->
+  <section id="qrGenerator" class="qr-panel qr-hidden">
+    <button class="qr-btn qr-secondary" onclick="qrShowHome()" type="button">← Back</button>
+    <h3 style="margin-top:18px">Generate QR Code</h3>
 
-    <section id="decimalPage" class="page">
-        <div class="card">
-            <h2>Number Base Converter</h2>
-            <p class="description">
-                Edit any field to convert between decimal,
-                binary, octal, and hexadecimal.
-            </p>
+    <div class="field">
+      <label for="qrPayload">URL or text to encode</label>
+      <textarea id="qrPayload" spellcheck="false" placeholder="Paste any URL, UPI URI, or text here…" style="min-height:110px"></textarea>
+    </div>
 
-            <div class="field number-field">
-                <label for="decimal">Decimal · Base 10</label>
-                <input type="text" id="decimal"
-                    inputmode="numeric" value="0">
-            </div>
+    <div class="button-row">
+      <button class="qr-btn" onclick="qrGenerate()" type="button">Generate QR Code</button>
+      <button class="qr-btn qr-secondary" onclick="qrClearGenerator()" type="button">Clear</button>
+    </div>
 
-            <div class="field number-field">
-                <label for="binary">Binary · Base 2</label>
-                <input type="text" id="binary"
-                    value="0" spellcheck="false">
-            </div>
+    <p id="qrGenStatus" class="qr-status" role="status" aria-live="polite"></p>
+    <div id="qrPreview" class="qr-preview">Your QR code will appear here.</div>
+    <button id="qrSaveButton" class="qr-btn" onclick="qrSavePNG()" type="button" disabled>Download PNG</button>
+    <p class="qr-note">Verify payment details before paying. A QR code does not verify the recipient or make a payment.</p>
+  </section>
 
-            <div class="field number-field">
-                <label for="octal">Octal · Base 8</label>
-                <input type="text" id="octal"
-                    value="0" spellcheck="false">
-            </div>
+  <!-- SCANNER -->
+  <section id="qrScanner" class="qr-panel qr-hidden">
+    <button class="qr-btn qr-secondary" onclick="qrShowHome()" type="button">← Back</button>
+    <h3 style="margin-top:18px">Scan QR Code</h3>
+    <p class="qr-note">Choose an image or start your back camera. Hold the QR code steady and make sure it is clearly visible.</p>
 
-            <div class="field number-field">
-                <label for="hex">Hexadecimal · Base 16</label>
-                <input type="text" id="hex"
-                    value="0" spellcheck="false">
-            </div>
+    <div class="field">
+      <label for="qrImageFile">Choose image from gallery or files</label>
+      <input id="qrImageFile" type="file" accept="image/*">
+    </div>
 
-            <div class="button-row">
-                <button class="action"
-                    onclick="copyValue('decimal')">
-                    Copy Decimal
-                </button>
-                <button class="action"
-                    onclick="copyValue('binary')">
-                    Copy Binary
-                </button>
-                <button class="action"
-                    onclick="copyValue('octal')">
-                    Copy Octal
-                </button>
-                <button class="action"
-                    onclick="copyValue('hex')">
-                    Copy Hex
-                </button>
-                <button class="action"
-                    onclick="resetNumbers()">
-                    Reset
-                </button>
-            </div>
+    <div class="qr-camera-box">
+      <video id="qrVideo" autoplay muted playsinline></video>
+    </div>
 
-            <div id="numberStatus" class="status"
-                aria-live="polite"></div>
-        </div>
-    </section>
+    <div class="button-row" style="justify-content:center;margin-top:0">
+      <button id="qrCameraToggle" class="qr-btn" onclick="qrToggleCamera()" type="button">📷 Back Camera</button>
+    </div>
 
-    <!-- JSON CLEANER -->
+    <canvas id="qrScanCanvas" class="qr-hidden"></canvas>
+    <p id="qrScanStatus" class="qr-status" role="status" aria-live="polite">Choose an image or start the camera.</p>
 
-    <section id="jsonPage" class="page">
-        <div class="card">
-            <h2>JSON Cleaner</h2>
-            <p class="description">
-                Format valid JSON with indentation or compact it
-                into a single line. Invalid JSON displays an error.
-            </p>
+    <h3>Scan Result</h3>
+    <div id="qrResult" class="qr-result">No QR code scanned yet.</div>
 
-            <div class="field">
-                <label for="jsonDirty">Input JSON</label>
-                <textarea id="jsonDirty"
-                    spellcheck="false"
-                    placeholder='Paste JSON here...'></textarea>
-            </div>
+    <div class="button-row">
+      <button id="qrCopyButton" class="qr-btn" onclick="qrCopyResult()" type="button" disabled>Copy Result</button>
+      <button id="qrOpenButton" class="qr-btn qr-secondary qr-hidden" onclick="qrOpenResult()" type="button">Open Web Link</button>
+    </div>
 
-            <div class="button-row">
-                <button class="action primary"
-                    onclick="copyFormattedJSON()">
-                    Copy Formatted
-                </button>
+    <p class="qr-note">Scanned links are not opened automatically. Check a URL before opening it.</p>
+  </section>
+</div>
+</section>
 
-                <button class="action"
-                    onclick="copyCompactJSON()">
-                    Copy Compact
-                </button>
-
-                <button class="action"
-                    onclick="clearJSON()">
-                    Clear
-                </button>
-            </div>
-
-            <div id="jsonStatus" class="status"
-                aria-live="polite"></div>
-
-            <div class="divider"></div>
-
-            <div class="field">
-                <label for="jsonClean">Formatted output</label>
-                <textarea id="jsonClean"
-                    spellcheck="false"
-                    placeholder="Formatted JSON will appear here..."></textarea>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        Coding Tools · Runs locally in your browser
-    </footer>
-
+<footer class="footer">Coding Tools · Runs locally in your browser</footer>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
 <script>
-/* PAGE SYSTEM */
-
+/* PAGE NAVIGATION */
 function showPage(id, btn) {
-    document.querySelectorAll(".page").forEach(page => {
-        page.classList.toggle("active", page.id === id);
-    });
-
-    document.querySelectorAll(".tab").forEach(tab => {
-        tab.classList.toggle("active", tab === btn);
-    });
+  qrStopCamera();
+  document.querySelectorAll(".page").forEach(page => {
+    page.classList.toggle("active", page.id === id);
+  });
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.toggle("active", tab === btn);
+  });
 }
-
-/* STATUS MESSAGE */
 
 function setStatus(id, message) {
-    document.getElementById(id).textContent = message;
+  document.getElementById(id).textContent = message;
 }
 
-/* COPY HELPER WITH FALLBACK */
-
-
+/* COPY HELPER */
 async function copyValue(id) {
-    const el = document.getElementById(id);
+  const el = document.getElementById(id);
+  const statusId = id === "jsonClean" ? "jsonStatus" :
+    id.includes("Box") ? "unicodeStatus" : "numberStatus";
 
-    const statusId =
-        id === "jsonClean" ? "jsonStatus" :
-        id.includes("Box") ? "unicodeStatus" :
-        "numberStatus";
-
-    // Check empty boxes only for Unicode and readable text.
-    if (id === "unicodeBox" || id === "textBox") {
-        el.classList.remove("copy-invalid");
-
-        if (!el.value.trim()) {
-            el.classList.add("copy-invalid");
-            return;
-        }
+  if (id === "unicodeBox" || id === "textBox") {
+    el.classList.remove("copy-invalid");
+    if (!el.value.trim()) {
+      el.classList.add("copy-invalid");
+      return;
     }
+  }
 
-    try {
-        if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(el.value);
-            setStatus(statusId, "Copied to clipboard!");
-            return;
-        }
-    } catch (error) {
-        // Try the fallback below.
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(el.value);
+      setStatus(statusId, "Copied to clipboard!");
+      return;
     }
+  } catch (e) {}
 
-    let temp = null;
-
-    try {
-        temp = document.createElement("textarea");
-        temp.value = el.value;
-        temp.setAttribute("readonly", "");
-        temp.style.position = "fixed";
-        temp.style.top = "0";
-        temp.style.left = "0";
-        temp.style.opacity = "0";
-
-        document.body.appendChild(temp);
-        temp.focus();
-        temp.select();
-        temp.setSelectionRange(0, temp.value.length);
-
-        const success = document.execCommand("copy");
-
-        if (success) {
-            setStatus(statusId, "Copied to clipboard!");
-        } else {
-            setStatus(statusId,
-                "Automatic copy failed. Select the output and copy it manually.");
-        }
-    } catch (error) {
-        setStatus(statusId,
-            "Copy failed. Please select the text and copy it manually.");
-    } finally {
-        if (temp && temp.parentNode) {
-            temp.parentNode.removeChild(temp);
-        }
-    }
+  let temp;
+  try {
+    temp = document.createElement("textarea");
+    temp.value = el.value;
+    temp.setAttribute("readonly", "");
+    temp.style.position = "fixed";
+    temp.style.opacity = "0";
+    document.body.appendChild(temp);
+    temp.select();
+    temp.setSelectionRange(0, temp.value.length);
+    setStatus(statusId, document.execCommand("copy")
+      ? "Copied to clipboard!"
+      : "Automatic copy failed. Select and copy manually.");
+  } catch (e) {
+    setStatus(statusId, "Copy failed. Please copy manually.");
+  } finally {
+    if (temp && temp.parentNode) temp.remove();
+  }
 }
-
 
 /* UNICODE CONVERTER */
-
 const unicodeBox = document.getElementById("unicodeBox");
 const textBox = document.getElementById("textBox");
-
 let updatingUnicode = false;
 
 function encodeUnicode(str) {
-    return Array.from(str, ch => {
-        const cp = ch.codePointAt(0);
-
-        if (cp <= 0xFFFF) {
-            return "\\u" + cp.toString(16).padStart(4, "0");
-        }
-
-        return "\\u{" + cp.toString(16) + "}";
-    }).join("");
+  return Array.from(str, char => {
+    const cp = char.codePointAt(0);
+    return cp <= 65535
+      ? "\\u" + cp.toString(16).padStart(4, "0")
+      : "\\u{" + cp.toString(16) + "}";
+  }).join("");
 }
 
 function decodeUnicode(str) {
-    return str.replace(
-        /\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})/g,
-        (match, braced, regular) => {
-            const cp = parseInt(braced || regular, 16);
-
-            if (
-                cp > 0x10FFFF ||
-                (cp >= 0xD800 && cp <= 0xDFFF)
-            ) {
-                return match;
-            }
-
-            return String.fromCodePoint(cp);
-        }
-    );
+  return str.replace(/\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})/g,
+    (match, a, b) => {
+      const cp = parseInt(a || b, 16);
+      if (cp > 0x10ffff || (cp >= 0xd800 && cp <= 0xdfff)) return match;
+      return String.fromCodePoint(cp);
+    });
 }
 
 unicodeBox.addEventListener("input", () => {
-    if (updatingUnicode) return;
-
-    updatingUnicode = true;
-    textBox.value = decodeUnicode(unicodeBox.value);
-    textBox.classList.remove("copy-invalid");
-    updatingUnicode = false;
-
-    setStatus("unicodeStatus", "Decoded Unicode sequence.");
+  unicodeBox.classList.remove("copy-invalid");
+  if (updatingUnicode) return;
+  updatingUnicode = true;
+  textBox.value = decodeUnicode(unicodeBox.value);
+  textBox.classList.remove("copy-invalid");
+  updatingUnicode = false;
+  setStatus("unicodeStatus", "Decoded Unicode sequence.");
 });
 
 textBox.addEventListener("input", () => {
-    if (updatingUnicode) return;
-
-    updatingUnicode = true;
-    unicodeBox.value = encodeUnicode(textBox.value);
-    unicodeBox.classList.remove("copy-invalid");
-    updatingUnicode = false;
-
-    setStatus("unicodeStatus", "Encoded text into Unicode.");
-});
-
-  [unicodeBox, textBox].forEach(el => {
-    el.addEventListener("input", () => {
-        el.classList.remove("copy-invalid");
-    });
+  textBox.classList.remove("copy-invalid");
+  if (updatingUnicode) return;
+  updatingUnicode = true;
+  unicodeBox.value = encodeUnicode(textBox.value);
+  unicodeBox.classList.remove("copy-invalid");
+  updatingUnicode = false;
+  setStatus("unicodeStatus", "Encoded text into Unicode.");
 });
 
 function clearUnicode() {
-    unicodeBox.value = "";
-    textBox.value = "";
-
-    unicodeBox.classList.remove("copy-invalid");
-    textBox.classList.remove("copy-invalid");
-
-    setStatus("unicodeStatus", "");
+  unicodeBox.value = "";
+  textBox.value = "";
+  unicodeBox.classList.remove("copy-invalid");
+  textBox.classList.remove("copy-invalid");
+  setStatus("unicodeStatus", "");
 }
 
 /* NUMBER BASE CONVERTER */
-
 const decimalBox = document.getElementById("decimal");
 const binaryBox = document.getElementById("binary");
 const octalBox = document.getElementById("octal");
 const hexBox = document.getElementById("hex");
-
 let updatingNumber = false;
 
 function parseBase(value, base) {
-    const input = value.trim();
+  value = value.trim();
+  if (!value) return null;
 
-    if (!input) return null;
+  const patterns = {
+    2:/^-?[01]+$/, 8:/^-?[0-7]+$/,
+    10:/^-?\d+$/, 16:/^-?[0-9a-fA-F]+$/
+  };
+  if (!patterns[base].test(value)) return null;
 
-    const patterns = {
-        2: /^-?[01]+$/,
-        8: /^-?[0-7]+$/,
-        10: /^-?\d+$/,
-        16: /^-?[0-9a-fA-F]+$/
-    };
+  const negative = value.startsWith("-");
+  const digits = negative ? value.slice(1) : value;
+  let number = 0n;
 
-    if (!patterns[base].test(input)) return null;
-
-    const negative = input.startsWith("-");
-    const digits = negative ? input.slice(1) : input;
-
-    let result = 0n;
-
-    for (const char of digits.toLowerCase()) {
-        const digit = parseInt(char, 16);
-
-        if (digit >= base) return null;
-
-        result = result * BigInt(base) + BigInt(digit);
-    }
-
-    return negative ? -result : result;
+  for (const char of digits.toLowerCase()) {
+    const digit = parseInt(char, 16);
+    if (digit >= base) return null;
+    number = number * BigInt(base) + BigInt(digit);
+  }
+  return negative ? -number : number;
 }
 
-function updateNumbers(source, base) {
-    if (updatingNumber) return;
+function updateNumbers(id, base) {
+  if (updatingNumber) return;
+  const el = document.getElementById(id);
+  const value = el.value.trim();
+  el.classList.remove("invalid");
+  if (!value) return;
 
-    const input = document.getElementById(source);
-    const value = input.value.trim();
+  let number;
+  try { number = parseBase(value, base); }
+  catch (e) { number = null; }
 
-    input.classList.remove("invalid");
+  if (number === null) {
+    el.classList.add("invalid");
+    setStatus("numberStatus", "Invalid value for base " + base + ".");
+    return;
+  }
 
-    if (!value) return;
+  updatingNumber = true;
+  decimalBox.value = number.toString(10);
+  binaryBox.value = number.toString(2);
+  octalBox.value = number.toString(8);
+  hexBox.value = number.toString(16).toUpperCase();
 
-    let n;
-
-    try {
-        n = parseBase(value, base);
-    } catch (error) {
-        n = null;
-    }
-
-    if (n === null) {
-        input.classList.add("invalid");
-        setStatus(
-            "numberStatus",
-            "Invalid value for base " + base + "."
-        );
-        return;
-    }
-
-    updatingNumber = true;
-
-    decimalBox.value = n.toString(10);
-    binaryBox.value = n.toString(2);
-    octalBox.value = n.toString(8);
-    hexBox.value = n.toString(16).toUpperCase();
-
-    [decimalBox, binaryBox, octalBox, hexBox].forEach(el => {
-        el.classList.remove("invalid");
-    });
-
-    updatingNumber = false;
-
-    setStatus("numberStatus", "Converted successfully.");
+  [decimalBox,binaryBox,octalBox,hexBox].forEach(input => input.classList.remove("invalid"));
+  updatingNumber = false;
+  setStatus("numberStatus", "Converted successfully.");
 }
 
-decimalBox.addEventListener("input", () =>
-    updateNumbers("decimal", 10)
-);
-
-binaryBox.addEventListener("input", () =>
-    updateNumbers("binary", 2)
-);
-
-octalBox.addEventListener("input", () =>
-    updateNumbers("octal", 8)
-);
-
-hexBox.addEventListener("input", () =>
-    updateNumbers("hex", 16)
-);
+decimalBox.addEventListener("input", () => updateNumbers("decimal",10));
+binaryBox.addEventListener("input", () => updateNumbers("binary",2));
+octalBox.addEventListener("input", () => updateNumbers("octal",8));
+hexBox.addEventListener("input", () => updateNumbers("hex",16));
 
 function resetNumbers() {
-    decimalBox.value = "0";
-    binaryBox.value = "0";
-    octalBox.value = "0";
-    hexBox.value = "0";
-
-    [decimalBox, binaryBox, octalBox, hexBox].forEach(el => {
-        el.classList.remove("invalid");
-    });
-
-    setStatus("numberStatus", "");
+  decimalBox.value = binaryBox.value = octalBox.value = hexBox.value = "0";
+  [decimalBox,binaryBox,octalBox,hexBox].forEach(input => input.classList.remove("invalid"));
+  setStatus("numberStatus", "");
 }
 
 /* JSON CLEANER */
-
 const jsonDirty = document.getElementById("jsonDirty");
 const jsonClean = document.getElementById("jsonClean");
 
-
-function readJSON() {
-    jsonDirty.classList.remove("copy-invalid");
-
-    if (!jsonDirty.value.trim()) {
-        jsonDirty.classList.add("copy-invalid");
-        setStatus("jsonStatus", "Please enter JSON first.");
-        return undefined;
-    }
-
-    try {
-        const obj = JSON.parse(jsonDirty.value);
-
-        jsonDirty.classList.remove("invalid");
-        return obj;
-    } catch (error) {
-        jsonDirty.classList.add("invalid");
-        setStatus("jsonStatus", "Invalid JSON: " + error.message);
-        return undefined;
-    }
-}
-
 async function copyFormattedJSON() {
-    jsonClean.classList.remove("copy-invalid");
-
-    if (!jsonClean.value.trim()) {
-        jsonClean.classList.add("copy-invalid");
-        return;
-    }
-
-    await copyValue("jsonClean");
+  jsonClean.classList.remove("copy-invalid");
+  if (!jsonClean.value.trim()) {
+    jsonClean.classList.add("copy-invalid");
+    return;
+  }
+  await copyValue("jsonClean");
 }
 
 async function copyCompactJSON() {
-    jsonDirty.classList.remove("copy-invalid");
-
-    if (!jsonDirty.value.trim()) {
-        jsonDirty.classList.add("copy-invalid");
-        return;
-    }
-
-    try {
-        const obj = JSON.parse(jsonDirty.value);
-        jsonClean.value = JSON.stringify(obj);
-        jsonClean.classList.remove("invalid", "copy-invalid");
-        await copyValue("jsonClean");
-    } catch (error) {
-        jsonDirty.classList.add("invalid");
-        setStatus("jsonStatus", "Invalid JSON: " + error.message);
-    }
+  jsonDirty.classList.remove("copy-invalid");
+  if (!jsonDirty.value.trim()) {
+    jsonDirty.classList.add("copy-invalid");
+    return;
+  }
+  try {
+    jsonClean.value = JSON.stringify(JSON.parse(jsonDirty.value));
+    jsonClean.classList.remove("invalid","copy-invalid");
+    await copyValue("jsonClean");
+  } catch (e) {
+    jsonDirty.classList.add("invalid");
+    setStatus("jsonStatus", "Invalid JSON: " + e.message);
+  }
 }
-
 
 function clearJSON() {
-    jsonDirty.value = "";
-    jsonClean.value = "";
-
-    jsonDirty.classList.remove("invalid", "copy-invalid");
-    jsonClean.classList.remove("invalid", "copy-invalid");
-
-    setStatus("jsonStatus", "");
+  jsonDirty.value = "";
+  jsonClean.value = "";
+  jsonDirty.classList.remove("invalid","copy-invalid");
+  jsonClean.classList.remove("invalid","copy-invalid");
+  setStatus("jsonStatus", "");
 }
 
-/* LIVE JSON VALIDATION AND FORMATTED PREVIEW */
-
 jsonDirty.addEventListener("input", () => {
-    jsonDirty.classList.remove("copy-invalid");
-    jsonDirty.classList.remove("invalid");
-
-    if (!jsonDirty.value.trim()) {
-        jsonClean.value = "";
-        setStatus("jsonStatus", "");
-        return;
-    }
-
-    try {
-        const obj = JSON.parse(jsonDirty.value);
-
-        jsonClean.value = JSON.stringify(obj, null, 3);
-        jsonClean.classList.remove("copy-invalid");
-        jsonClean.classList.remove("invalid");
-
-        setStatus("jsonStatus", "Valid JSON.");
-    } catch (error) {
-        jsonClean.value = "";
-        setStatus("jsonStatus", "Waiting for valid JSON...");
-    }
+  jsonDirty.classList.remove("copy-invalid","invalid");
+  if (!jsonDirty.value.trim()) {
+    jsonClean.value = "";
+    setStatus("jsonStatus", "");
+    return;
+  }
+  try {
+    jsonClean.value = JSON.stringify(JSON.parse(jsonDirty.value), null, 3);
+    jsonClean.classList.remove("copy-invalid","invalid");
+    setStatus("jsonStatus", "Valid JSON.");
+  } catch (e) {
+    jsonClean.value = "";
+    setStatus("jsonStatus", "Waiting for valid JSON...");
+  }
 });
-
-
-/* SYNC EDITS FROM OUTPUT BACK TO INPUT */
 
 jsonClean.addEventListener("input", () => {
-    jsonClean.classList.remove("invalid");
-    jsonClean.classList.remove("copy-invalid");
-
-    if (!jsonClean.value.trim()) return;
-
-    try {
-        const obj = JSON.parse(jsonClean.value);
-
-        jsonDirty.value = JSON.stringify(obj);
-        jsonDirty.classList.remove("copy-invalid");
-        jsonDirty.classList.remove("invalid");
-
-        setStatus("jsonStatus", "JSON synchronized.");
-    } catch (error) {
-        setStatus("jsonStatus", "Output is not valid JSON yet.");
-    }
+  jsonClean.classList.remove("invalid","copy-invalid");
+  if (!jsonClean.value.trim()) return;
+  try {
+    jsonDirty.value = JSON.stringify(JSON.parse(jsonClean.value));
+    jsonDirty.classList.remove("copy-invalid","invalid");
+    setStatus("jsonStatus", "JSON synchronized.");
+  } catch (e) {
+    setStatus("jsonStatus", "Output is not valid JSON yet.");
+  }
 });
+
+/* QR GENERATOR AND SCANNER */
+const qrEl = id => document.getElementById(id);
+
+let qrCameraStream = null;
+let qrAnimationFrame = null;
+let qrLastResult = "";
+let qrCameraStarting = false;
+let qrLastScanAt = 0;
+let qrCameraRequestId = 0;
+
+function qrOpenSection(which) {
+  qrStopCamera();
+  qrEl("qrHome").classList.add("qr-hidden");
+  qrEl("qrGenerator").classList.toggle("qr-hidden", which !== "generator");
+  qrEl("qrScanner").classList.toggle("qr-hidden", which !== "scanner");
+
+  if (which === "scanner") {
+    qrEl("qrScanStatus").textContent = "Choose an image or start the camera.";
+  }
+}
+
+function qrShowHome() {
+  qrStopCamera();
+  qrEl("qrGenerator").classList.add("qr-hidden");
+  qrEl("qrScanner").classList.add("qr-hidden");
+  qrEl("qrHome").classList.remove("qr-hidden");
+}
+
+function qrGetPayload() {
+  const raw = qrEl("qrPayload").value.trim();
+  if (!raw) throw Error("Enter a URL or text to encode.");
+  return raw;
+}
+
+function qrGenerate() {
+  const preview = qrEl("qrPreview");
+  const status = qrEl("qrGenStatus");
+  preview.replaceChildren();
+  qrEl("qrSaveButton").disabled = true;
+
+  if (typeof QRCode === "undefined") {
+    status.textContent = "QR library could not load. Check your internet connection and reload the page.";
+    return;
+  }
+
+  try {
+    new QRCode(preview, {
+      text:qrGetPayload(),
+      width:280,
+      height:280,
+      colorDark:"#000000",
+      colorLight:"#ffffff",
+      correctLevel:QRCode.CorrectLevel.M
+    });
+    qrEl("qrSaveButton").disabled = false;
+    status.textContent = "QR code generated. Scan it to verify the contents.";
+  } catch (e) {
+    status.textContent = e.message || "Could not generate QR code.";
+  }
+}
+
+function qrClearGenerator() {
+  qrEl("qrPayload").value = "";
+  qrEl("qrPreview").replaceChildren();
+  qrEl("qrPreview").textContent = "Your QR code will appear here.";
+  qrEl("qrGenStatus").textContent = "";
+  qrEl("qrSaveButton").disabled = true;
+}
+
+function qrSavePNG() {
+  const preview = qrEl("qrPreview");
+  const canvas = preview.querySelector("canvas");
+  const image = preview.querySelector("img");
+
+  try {
+    const data = canvas ? canvas.toDataURL("image/png") :
+      (image && image.src.startsWith("data:image/") ? image.src : null);
+
+    if (!data) {
+      qrEl("qrGenStatus").textContent = "QR image not ready. Generate it again.";
+      return;
+    }
+
+    const link = document.createElement("a");
+    link.href = data;
+    link.download = "qr-code.png";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (e) {
+    qrEl("qrGenStatus").textContent = "Could not save QR code.";
+  }
+}
+
+function qrShowResult(value) {
+  qrLastResult = value;
+  qrEl("qrResult").textContent = value;
+  qrEl("qrCopyButton").disabled = false;
+
+  let isWebLink = false;
+  try {
+    const url = new URL(value);
+    isWebLink = (url.protocol === "https:" || url.protocol === "http:") && !!url.hostname;
+  } catch (e) {}
+
+  qrEl("qrOpenButton").classList.toggle("qr-hidden", !isWebLink);
+  qrEl("qrScanStatus").textContent = "QR code detected successfully.";
+}
+
+/*
+  Decode a canvas with jsQR.
+  Returns the decoded string, or null if no QR code is found.
+*/
+function qrDecodeCanvas(canvas) {
+  if (typeof jsQR !== "function") {
+    throw Error("Scanner library could not load. Check your internet connection and reload.");
+  }
+
+  if (!canvas.width || !canvas.height) return null;
+
+  const context = canvas.getContext("2d", {willReadFrequently:true});
+  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+
+  const code = jsQR(
+    imageData.data,
+    imageData.width,
+    imageData.height,
+    { inversionAttempts:"attemptBoth" }
+  );
+
+  return code && code.data ? code.data : null;
+}
+
+/* Draw an image to a canvas without making it excessively large. */
+function qrDrawScaled(source, canvas, width, height, maxSide = 1400) {
+  const scale = Math.min(1, maxSide / Math.max(width, height));
+  canvas.width = Math.max(1, Math.round(width * scale));
+  canvas.height = Math.max(1, Math.round(height * scale));
+
+  const context = canvas.getContext("2d", {willReadFrequently:true});
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.drawImage(source, 0, 0, canvas.width, canvas.height);
+}
+
+/* GALLERY IMAGE SCANNING */
+qrEl("qrImageFile").addEventListener("change", function() {
+  const file = this.files && this.files[0];
+  if (!file) return;
+
+  qrStopCamera();
+
+  if (!file.type.startsWith("image/")) {
+    qrEl("qrScanStatus").textContent = "Please select an image file.";
+    return;
+  }
+
+  const image = new Image();
+  const source = URL.createObjectURL(file);
+
+  image.onload = () => {
+    try {
+      const canvas = qrEl("qrScanCanvas");
+      qrDrawScaled(image, canvas, image.naturalWidth, image.naturalHeight);
+
+      const result = qrDecodeCanvas(canvas);
+
+      if (result) {
+        qrShowResult(result);
+      } else {
+        qrEl("qrScanStatus").textContent =
+          "No QR code found. Try a clearer, brighter image with the entire code visible.";
+      }
+    } catch (e) {
+      qrEl("qrScanStatus").textContent = e.message || "Could not read this image.";
+    } finally {
+      URL.revokeObjectURL(source);
+    }
+  };
+
+  image.onerror = () => {
+    URL.revokeObjectURL(source);
+    qrEl("qrScanStatus").textContent = "Could not open this image.";
+  };
+
+  qrEl("qrScanStatus").textContent = "Reading image…";
+  image.src = source;
+});
+
+/* START CAMERA */
+async function qrStartCamera() {
+  if (qrCameraStream || qrCameraStarting) return;
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    qrEl("qrScanStatus").textContent =
+      "Camera access requires HTTPS or localhost. You can scan an image instead.";
+    return;
+  }
+
+  if (typeof jsQR !== "function") {
+    qrEl("qrScanStatus").textContent =
+      "Scanner library could not load. Check your internet connection and reload the page.";
+    return;
+  }
+
+  qrCameraStarting = true;
+  const requestId = ++qrCameraRequestId;
+  qrEl("qrCameraToggle").textContent = "Starting camera…";
+  qrEl("qrScanStatus").textContent = "Requesting camera permission…";
+
+  let stream = null;
+
+  try {
+    /* Prefer the rear-facing camera. */
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio:false,
+      video:{
+        facingMode:{ideal:"environment"},
+        width:{ideal:1280},
+        height:{ideal:720}
+      }
+    });
+
+    /* If the user stopped or navigated away while permission was pending,
+       do not leave the camera running. */
+    if (requestId !== qrCameraRequestId) {
+      stream.getTracks().forEach(track => track.stop());
+      return;
+    }
+
+    qrCameraStream = stream;
+
+    const video = qrEl("qrVideo");
+    video.srcObject = stream;
+
+    await new Promise((resolve, reject) => {
+      if (video.readyState >= 1 && video.videoWidth > 0) {
+        resolve();
+        return;
+      }
+
+      const onReady = () => {
+        cleanup();
+        resolve();
+      };
+
+      const onError = () => {
+        cleanup();
+        reject(Error("The camera video could not be started."));
+      };
+
+      const cleanup = () => {
+        video.removeEventListener("loadedmetadata", onReady);
+        video.removeEventListener("error", onError);
+      };
+
+      video.addEventListener("loadedmetadata", onReady, {once:true});
+      video.addEventListener("error", onError, {once:true});
+    });
+
+    await video.play();
+
+    if (requestId !== qrCameraRequestId) {
+      qrStopCamera();
+      return;
+    }
+
+    qrEl("qrCameraToggle").textContent = "⏹ Stop Camera";
+    qrEl("qrScanStatus").textContent =
+      "Camera active. Move the QR code into view and hold it steady.";
+    qrLastScanAt = 0;
+
+    qrAnimationFrame = requestAnimationFrame(qrScanFrame);
+
+  } catch (e) {
+    if (stream) stream.getTracks().forEach(track => track.stop());
+
+    if (requestId === qrCameraRequestId) {
+      qrCameraStream = null;
+
+      const video = qrEl("qrVideo");
+      video.pause();
+      video.srcObject = null;
+
+      if (e.name === "NotAllowedError" || e.name === "PermissionDeniedError") {
+        qrEl("qrScanStatus").textContent =
+          "Camera permission denied. Allow camera access in your browser settings.";
+      } else if (e.name === "NotFoundError" || e.name === "DevicesNotFoundError") {
+        qrEl("qrScanStatus").textContent =
+          "No camera was found on this device.";
+      } else if (e.name === "NotReadableError") {
+        qrEl("qrScanStatus").textContent =
+          "The camera may be in use by another app. Close that app and try again.";
+      } else {
+        qrEl("qrScanStatus").textContent =
+          "Could not start the camera. Use HTTPS, allow camera permission, and try again.";
+      }
+    }
+  } finally {
+    if (requestId === qrCameraRequestId) {
+      qrCameraStarting = false;
+      if (!qrCameraStream) {
+        qrEl("qrCameraToggle").textContent = "📷 Back Camera";
+      }
+    }
+  }
+}
+
+/* START OR STOP CAMERA */
+function qrToggleCamera() {
+  if (qrCameraStream || qrCameraStarting) {
+    qrStopCamera();
+    qrEl("qrScanStatus").textContent = "Camera stopped.";
+  } else {
+    qrStartCamera();
+  }
+}
+
+/*
+  Scan the full camera frame first.
+  If that fails, scan the center square as a second attempt.
+  This avoids missing QR codes that are not centered in the preview.
+*/
+function qrScanFrame(timestamp) {
+  if (!qrCameraStream) return;
+
+  const video = qrEl("qrVideo");
+
+  /* Process frames about 8 times per second to limit CPU usage. */
+  if (
+    video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+    timestamp - qrLastScanAt >= 125
+  ) {
+    qrLastScanAt = timestamp;
+
+    const canvas = qrEl("qrScanCanvas");
+    const width = video.videoWidth;
+    const height = video.videoHeight;
+
+    if (width > 0 && height > 0) {
+      try {
+        /* Attempt 1: scan the entire video frame. */
+        qrDrawScaled(video, canvas, width, height, 1400);
+        let result = qrDecodeCanvas(canvas);
+
+        /* Attempt 2: scan the center square at higher relative detail. */
+        if (!result) {
+          const side = Math.min(width, height);
+          const sx = Math.floor((width - side) / 2);
+          const sy = Math.floor((height - side) / 2);
+          const scale = Math.min(1, 1200 / side);
+
+          canvas.width = Math.max(1, Math.round(side * scale));
+          canvas.height = Math.max(1, Math.round(side * scale));
+
+          const context = canvas.getContext("2d", {willReadFrequently:true});
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          context.drawImage(
+            video,
+            sx, sy, side, side,
+            0, 0, canvas.width, canvas.height
+          );
+
+          result = qrDecodeCanvas(canvas);
+        }
+
+        if (result) {
+          qrShowResult(result);
+          qrStopCamera();
+          return;
+        }
+
+        qrEl("qrScanStatus").textContent =
+          "Scanning… keep the whole QR code visible, steady, and well lit.";
+      } catch (e) {
+        qrEl("qrScanStatus").textContent =
+          e.message || "Could not process the camera image. Try again.";
+      }
+    }
+  }
+
+  if (qrCameraStream) {
+    qrAnimationFrame = requestAnimationFrame(qrScanFrame);
+  }
+}
+
+/* STOP CAMERA AND RESET BUTTON */
+function qrStopCamera() {
+  /* Invalidate any camera request still waiting for permission. */
+  qrCameraRequestId++;
+
+  if (qrAnimationFrame !== null) {
+    cancelAnimationFrame(qrAnimationFrame);
+    qrAnimationFrame = null;
+  }
+
+  if (qrCameraStream) {
+    qrCameraStream.getTracks().forEach(track => track.stop());
+    qrCameraStream = null;
+  }
+
+  qrCameraStarting = false;
+
+  const video = qrEl("qrVideo");
+  if (video) {
+    video.pause();
+    video.srcObject = null;
+  }
+
+  const toggle = qrEl("qrCameraToggle");
+  if (toggle) toggle.textContent = "📷 Back Camera";
+}
+
+/* COPY SCANNED RESULT */
+async function qrCopyResult() {
+  if (!qrLastResult) return;
+
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(qrLastResult);
+      qrEl("qrScanStatus").textContent = "Result copied.";
+      return;
+    }
+    throw Error("Clipboard unavailable");
+  } catch (e) {
+    const temp = document.createElement("textarea");
+    temp.value = qrLastResult;
+    temp.style.position = "fixed";
+    temp.style.opacity = "0";
+    document.body.appendChild(temp);
+    temp.select();
+
+    let copied = false;
+    try { copied = document.execCommand("copy"); } catch (err) {}
+    temp.remove();
+
+    qrEl("qrScanStatus").textContent = copied
+      ? "Result copied."
+      : "Copy blocked by browser.";
+  }
+}
+
+/* OPEN ONLY HTTP/HTTPS LINKS */
+function qrOpenResult() {
+  try {
+    const url = new URL(qrLastResult);
+
+    if (url.protocol === "https:" || url.protocol === "http:") {
+      window.open(url.href, "_blank", "noopener,noreferrer");
+    } else {
+      qrEl("qrScanStatus").textContent =
+        "Only web links can be opened here. Copy the result to use other QR content.";
+    }
+  } catch (e) {
+    qrEl("qrScanStatus").textContent =
+      "This QR code contains text, not a web link. Copy the result to use it.";
+  }
+}
+
+/* RELEASE CAMERA WHEN LEAVING THE PAGE */
+window.addEventListener("pagehide", qrStopCamera);
 </script>
 </body>
 </html>
