@@ -666,6 +666,10 @@ textBox.addEventListener("input", () => {
 function clearUnicode() {
     unicodeBox.value = "";
     textBox.value = "";
+
+    unicodeBox.classList.remove("copy-invalid");
+    textBox.classList.remove("copy-invalid");
+
     setStatus("unicodeStatus", "");
 }
 
@@ -842,8 +846,8 @@ function clearJSON() {
     jsonDirty.value = "";
     jsonClean.value = "";
 
-    jsonDirty.classList.remove("invalid");
-    jsonClean.classList.remove("invalid");
+    jsonDirty.classList.remove("invalid", "copy-invalid");
+    jsonClean.classList.remove("invalid", "copy-invalid");
 
     setStatus("jsonStatus", "");
 }
