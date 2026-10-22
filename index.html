@@ -585,7 +585,7 @@
                 <h2>Unicode Escape Converter</h2>
 
                 <p class="description">
-                    Convert text to Unicode escape sequences and decode Unicode sequences back into readable text.
+                    Convert Unicode escape sequences to readable text and readable text to Unicode sequences.
                 </p>
 
                 <div class="field">
@@ -594,7 +594,7 @@
                     <textarea
                         id="unicodeBox"
                         spellcheck="false"
-                        placeholder="Example: \u0048\u0065\u006c\u006c\u006f"
+                        placeholder="Type or paste your Unicode sequence here..."
                     ></textarea>
                 </div>
 
@@ -603,7 +603,7 @@
 
                     <textarea
                         id="textBox"
-                        placeholder="Type your text here..."
+                        placeholder="Type or paste your readable text here..."
                     ></textarea>
                 </div>
 
@@ -694,26 +694,26 @@
                 <h2>JSON Cleaner</h2>
 
                 <p class="description">
-                    Format valid JSON with indentation or compact it into a single line. Invalid JSON displays an error.
+                    Format valid JSON with indentation or compact it into a single line.
                 </p>
 
                 <div class="field">
-                    <label for="jsonDirty">Input JSON</label>
+                    <label for="jsonDirty">Compact JSON</label>
 
                     <textarea
                         id="jsonDirty"
                         spellcheck="false"
-                        placeholder="Paste JSON here..."
+                        placeholder="Type or paste your Compact JSON here..."
                     ></textarea>
                 </div>
 
                 <div class="button-row">
-                    <button class="action" onclick="copyFormattedJSON()">
-                        Copy Formatted
-                    </button>
-
                     <button class="action" onclick="copyCompactJSON()">
                         Copy Compact
+                    </button>
+
+                    <button class="action" onclick="copyFormattedJSON()">
+                        Copy Formatted
                     </button>
 
                     <button class="action" onclick="clearJSON()">
@@ -731,7 +731,7 @@
                     <textarea
                         id="jsonClean"
                         spellcheck="false"
-                        placeholder="Formatted JSON will appear here..."
+                        placeholder="Type or paste your Formatted JSON here..."
                     ></textarea>
                 </div>
 
@@ -804,7 +804,7 @@
                         <textarea
                             id="qrPayload"
                             spellcheck="false"
-                            placeholder="Paste any URL, UPI URI, or text here…"
+                            placeholder="Paste or type any URL, UPI or text here…"
                             style="min-height:110px"
                         ></textarea>
                     </div>
@@ -959,7 +959,7 @@
         <!-- FOOTER -->
 
         <footer class="footer">
-            Coding Tools · Runs locally in your browser
+            Coding Tools · Made By Devil Kakashi & ChatGPT
         </footer>
 
     </div>
@@ -1036,7 +1036,7 @@
                     statusId,
                     document.execCommand("copy")
                         ? "Copied to clipboard!"
-                        : "Automatic copy failed. Select and copy manually."
+                        : "Automatic copy failed. Please select and copy manually."
                 );
             } catch (e) {
                 setStatus(statusId, "Copy failed. Please copy manually.");
@@ -1111,7 +1111,7 @@
 
             updatingUnicode = false;
 
-            setStatus("unicodeStatus", "Encoded text into Unicode.");
+            setStatus("unicodeStatus", "Encoded readable text.");
         });
 
 
@@ -1445,7 +1445,7 @@
                 qrEl("qrSaveButton").disabled = false;
 
                 status.textContent =
-                    "QR code generated. Scan it to verify the contents.";
+                    "QR code generated. Scan it to see the contents.";
             } catch (e) {
                 status.textContent =
                     e.message || "Could not generate QR code.";
