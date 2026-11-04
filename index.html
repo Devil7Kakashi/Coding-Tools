@@ -566,7 +566,7 @@
             </button>
 
             <button class="tab" onclick="showPage('jsonPage',this)">
-                JSON Cleaner
+                JSON Studio
             </button>
 
             <button class="tab" onclick="showPage('qrPage',this)">
@@ -684,58 +684,68 @@
         </section>
 
 
-        <!-- JSON CLEANER -->
+        <!-- JSON VALIDATOR -->
 
-        <section id="jsonPage" class="page">
-            <div class="card">
+<section id="jsonPage" class="page">
+    <div class="card">
 
-                <h2>JSON Cleaner</h2>
+        <h2>JSON Studio</h2>
 
-                <p class="description">
-                    Format valid JSON with indentation or compact it into a single line.
-                </p>
+        <p class="description">
+            Find syntax errors, format or minify JSON.
+        </p>
 
-                <div class="field">
-                    <label for="jsonDirty">Compact JSON</label>
+        <div class="field">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:9px; flex-wrap:wrap;">
 
-                    <textarea
-                        id="jsonDirty"
-                        spellcheck="false"
-                        placeholder="Type or paste your Compact JSON here..."
-                    ></textarea>
-                </div>
+    <label for="validatorInput" style="margin:0;">
+        Enter JSON
+    </label>
 
-                <div class="button-row">
-                    <button class="action" onclick="copyCompactJSON()">
-                        Copy Compact
-                    </button>
+    <span
+        id="validatorStats"
+        style="color:var(--muted); font-size:12px;"
+    >
+        Lines: 0 | Characters: 0
+    </span>
 
-                    <button class="action" onclick="copyFormattedJSON()">
-                        Copy Formatted
-                    </button>
+</div>
 
-                    <button class="action" onclick="clearJSON()">
-                        Clear
-                    </button>
-                </div>
+            <textarea
+                id="validatorInput"
+                spellcheck="false"
+                placeholder='Type or paste your JSON here...'
+            ></textarea>
+        </div>
 
-                <div id="jsonStatus" class="status" aria-live="polite"></div>
+        <div class="button-row">
 
-                <div class="divider"></div>
+            <button class="action" onclick="validateJSON()">
+                Validate
+            </button>
 
-                <div class="field">
-                    <label for="jsonClean">Formatted output</label>
+            <button class="action" onclick="formatJSON()">
+                Format
+            </button>
 
-                    <textarea
-                        id="jsonClean"
-                        spellcheck="false"
-                        placeholder="Type or paste your Formatted JSON here..."
-                    ></textarea>
-                </div>
+            <button class="action" onclick="minifyJSON()">
+                Minify
+            </button>
 
-            </div>
-        </section>
+            <button class="action" onclick="copyValidatorJSON()">
+                Copy
+            </button>
 
+            <button class="action" onclick="clearValidatorJSON()">
+                Clear
+            </button>
+
+        </div>
+
+        <div id="validatorStatus" class="status" role="status" aria-live="polite">
+        </div>
+    </div>
+</section>
 
         <!-- QR GENERATOR AND SCANNER -->
 
@@ -1003,6 +1013,7 @@
 
                 if (!el.value.trim()) {
                     el.classList.add("copy-invalid");
+                    setStatus("unicodeStatus", "Nothing to copy.");
                     return;
                 }
             }
@@ -1252,103 +1263,324 @@
         }
 
 
-        /* JSON CLEANER */
+        /* JSON VALIDATOR & ERROR FINDER */
 
-        const jsonDirty = document.getElementById("jsonDirty");
-        const jsonClean = document.getElementById("jsonClean");
+const validatorInput = document.getElementById("validatorInput");
+
+function updateJSONStats() {
+    const value = validatorInput.value;
+
+    const lines = value ? value.split("\n").length : 0;
+    const characters = value.length;
+
+    setStatus(
+        "validatorStats",
+        "Lines: " + lines + " | Characters: " + characters
+    );
+}
 
 
-        async function copyFormattedJSON() {
-            jsonClean.classList.remove("copy-invalid");
+/* FIND ERROR POSITION */
 
-            if (!jsonClean.value.trim()) {
-                jsonClean.classList.add("copy-invalid");
-                return;
-            }
+function getJSONErrorPosition(error, source) {
 
-            await copyValue("jsonClean");
+    const message = error.message || "";
+
+    // Chrome and many other browsers
+    let match = message.match(/position\s+(\d+)/i);
+
+    if (match) {
+        return Number(match[1]);
+    }
+
+    // Some browsers report line and column
+    match = message.match(/line\s+(\d+)\s+column\s+(\d+)/i);
+
+    if (match) {
+        const line = Number(match[1]);
+        const column = Number(match[2]);
+
+        const lines = source.split("\n");
+
+        let position = 0;
+
+        for (let i = 0; i < line - 1; i++) {
+            position += lines[i].length + 1;
         }
 
+        return position + column - 1;
+    }
 
-        async function copyCompactJSON() {
-            jsonDirty.classList.remove("copy-invalid");
+    return -1;
+}
 
-            if (!jsonDirty.value.trim()) {
-                jsonDirty.classList.add("copy-invalid");
-                return;
-            }
 
-            try {
-                jsonClean.value = JSON.stringify(
-                    JSON.parse(jsonDirty.value)
-                );
+/* VALIDATE JSON */
 
-                jsonClean.classList.remove("invalid", "copy-invalid");
+function validateJSON() {
 
-                await copyValue("jsonClean");
-            } catch (e) {
-                jsonDirty.classList.add("invalid");
+    const source = validatorInput.value;
 
-                setStatus("jsonStatus", "Invalid JSON: " + e.message);
-            }
+    validatorInput.classList.remove("invalid");
+
+    if (!source.trim()) {
+        validatorInput.classList.add("invalid");
+
+        setStatus(
+            "validatorStatus",
+            "Please enter JSON to validate."
+        );
+
+        updateJSONStats();
+        return;
+    }
+
+    try {
+
+        JSON.parse(source);
+
+        setStatus(
+            "validatorStatus",
+            "✓ Valid JSON! No syntax errors found."
+        );
+
+    } catch (error) {
+
+        validatorInput.classList.add("invalid");
+
+        const position = getJSONErrorPosition(error, source);
+
+        if (position >= 0) {
+
+            const safePosition = Math.min(position, source.length);
+
+            const beforeError = source.slice(0, safePosition);
+
+            const line = beforeError.split("\n").length;
+
+            const lastNewLine = beforeError.lastIndexOf("\n");
+
+            const column = safePosition - lastNewLine;
+
+            setStatus(
+                "validatorStatus",
+                "✕ Invalid JSON: " + error.message +
+                " | Approximate line: " + line +
+                ", column: " + column
+            );
+
+        } else {
+
+            setStatus(
+                "validatorStatus",
+                "✕ Invalid JSON: " + error.message
+            );
+
         }
 
+    }
 
-        function clearJSON() {
-            jsonDirty.value = "";
-            jsonClean.value = "";
+    updateJSONStats();
+}
 
-            jsonDirty.classList.remove("invalid", "copy-invalid");
-            jsonClean.classList.remove("invalid", "copy-invalid");
 
-            setStatus("jsonStatus", "");
+/* FORMAT JSON */
+
+function formatJSON() {
+
+    const source = validatorInput.value;
+
+    validatorInput.classList.remove("invalid");
+
+    if (!source.trim()) {
+
+        validatorInput.classList.add("invalid");
+
+        setStatus(
+            "validatorStatus",
+            "Please enter JSON to format."
+        );
+
+        return;
+    }
+
+    try {
+
+        const parsed = JSON.parse(source);
+
+        validatorInput.value = JSON.stringify(
+            parsed,
+            null,
+            4
+        );
+
+        setStatus(
+            "validatorStatus",
+            "✓ JSON formatted successfully."
+        );
+
+        updateJSONStats();
+
+    } catch (error) {
+
+        validatorInput.classList.add("invalid");
+
+        setStatus(
+            "validatorStatus",
+            "✕ Cannot format invalid JSON. Validate it to find the error."
+        );
+
+        updateJSONStats();
+    }
+}
+
+
+/* MINIFY JSON */
+
+function minifyJSON() {
+
+    const source = validatorInput.value;
+
+    validatorInput.classList.remove("invalid");
+
+    if (!source.trim()) {
+
+        validatorInput.classList.add("invalid");
+
+        setStatus(
+            "validatorStatus",
+            "Please enter JSON to minify."
+        );
+
+        return;
+    }
+
+    try {
+
+        const parsed = JSON.parse(source);
+
+        validatorInput.value = JSON.stringify(parsed);
+
+        setStatus(
+            "validatorStatus",
+            "✓ JSON minified successfully."
+        );
+
+        updateJSONStats();
+
+    } catch (error) {
+
+        validatorInput.classList.add("invalid");
+
+        setStatus(
+            "validatorStatus",
+            "✕ Cannot minify invalid JSON."
+        );
+
+        updateJSONStats();
+    }
+}
+
+
+/* COPY JSON */
+
+async function copyValidatorJSON() {
+
+    validatorInput.classList.remove("copy-invalid");
+
+    if (!validatorInput.value.trim()) {
+
+        validatorInput.classList.add("copy-invalid");
+
+        setStatus(
+            "validatorStatus",
+            "Nothing to copy."
+        );
+
+        return;
+    }
+
+    try {
+
+        if (navigator.clipboard && window.isSecureContext) {
+
+            await navigator.clipboard.writeText(
+                validatorInput.value
+            );
+
+            setStatus(
+                "validatorStatus",
+                "✓ JSON copied to clipboard!"
+            );
+
+            return;
         }
 
+        const temp = document.createElement("textarea");
 
-        jsonDirty.addEventListener("input", () => {
-            jsonDirty.classList.remove("copy-invalid", "invalid");
+        temp.value = validatorInput.value;
+        temp.style.position = "fixed";
+        temp.style.opacity = "0";
 
-            if (!jsonDirty.value.trim()) {
-                jsonClean.value = "";
-                setStatus("jsonStatus", "");
-                return;
-            }
+        document.body.appendChild(temp);
 
-            try {
-                jsonClean.value = JSON.stringify(
-                    JSON.parse(jsonDirty.value),
-                    null,
-                    3
-                );
+        temp.select();
 
-                jsonClean.classList.remove("copy-invalid", "invalid");
+        const copied = document.execCommand("copy");
 
-                setStatus("jsonStatus", "Valid JSON.");
-            } catch (e) {
-                jsonClean.value = "";
+        temp.remove();
 
-                setStatus("jsonStatus", "Waiting for valid JSON...");
-            }
-        });
+        setStatus(
+            "validatorStatus",
+            copied
+                ? "✓ JSON copied to clipboard!"
+                : "Copy failed. Please copy manually."
+        );
+
+    } catch (error) {
+
+        setStatus(
+            "validatorStatus",
+            "Copy failed. Please copy manually."
+        );
+
+    }
+}
 
 
-        jsonClean.addEventListener("input", () => {
-            jsonClean.classList.remove("invalid", "copy-invalid");
+/* CLEAR JSON */
 
-            if (!jsonClean.value.trim()) return;
+function clearValidatorJSON() {
 
-            try {
-                jsonDirty.value = JSON.stringify(
-                    JSON.parse(jsonClean.value)
-                );
+    validatorInput.value = "";
 
-                jsonDirty.classList.remove("copy-invalid", "invalid");
+    validatorInput.classList.remove(
+        "invalid",
+        "copy-invalid"
+    );
 
-                setStatus("jsonStatus", "JSON synchronized.");
-            } catch (e) {
-                setStatus("jsonStatus", "Output is not valid JSON yet.");
-            }
-        });
+    setStatus("validatorStatus", "");
+
+    updateJSONStats();
+}
+
+
+/* LIVE STATS AND ERROR RESET */
+
+validatorInput.addEventListener("input", () => {
+
+    validatorInput.classList.remove(
+        "invalid",
+        "copy-invalid"
+    );
+
+    setStatus("validatorStatus", "");
+
+    updateJSONStats();
+
+});
+
+updateJSONStats();
 
 
         /* QR GENERATOR AND SCANNER */
